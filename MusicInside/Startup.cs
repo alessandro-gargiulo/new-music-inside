@@ -19,7 +19,7 @@ namespace MusicInside
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=.\\SQLEXPRESS;Database=MusicInsideTest;Trusted_Connection=True";
+            var connection = Configuration.GetConnectionString("MusicInsideDatabase");
             services.AddDbContext<MusicInsideDbContext>
                 (options => options.UseSqlServer(connection));
 
