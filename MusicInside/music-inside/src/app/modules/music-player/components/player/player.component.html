@@ -1,5 +1,5 @@
 <audio controls #playerRef style="display: none">
-  <source [src]="current.songUrl" [type]="current.fileType"> Your browser does not support the audio element.
+  <source src="" type=""> Your browser does not support the audio element.
 </audio>
 
 <main ontouchstart>
@@ -13,13 +13,18 @@
           <div>Up Next</div>
         </header>
         <ol class="playlist-container">
-          <li *ngFor="let track of playlist">
+          <li *ngFor="let track of playlist; let i = index">
             <a>
               <img [src]="track.coverUrl">
               <div>
                 <div class="track-title">{{track.title}}</div>
                 <div class="track-artist">{{track.artist}}</div>
               </div>
+              <span class="trash-icon" (click)="removeFromPlaylist(i)">
+                <svg viewBox="0 0 24 24">
+                  <path d="M 10 2 L 9 3 L 4 3 L 4 5 L 7 5 L 17 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 5 7 L 5 20 C 5 21.1 5.9 22 7 22 L 17 22 C 18.1 22 19 21.1 19 20 L 19 7 L 5 7 z" />
+                </svg>
+              </span>
             </a>
           </li>
         </ol>
@@ -31,17 +36,17 @@
         </div>
         <div class='meta'>
           <time>
-            <span>1:29</span>
-            <span>2:58</span>
+            <span>{{currentTime}}</span>
+            <span>{{currentTotalTime}}</span>
           </time>
           <div class='controls top'>
-            <a class='rewind skip' (click)="skip(-1)">
+            <a class='rewind skip' (click)="skip(-1)" [ngClass]="{'disabled': disableBackward}">
               <svg viewBox='0 0 36 20'>
                 <path d='M1.69813738,11.0254725 C0.75331072,10.4595484 0.761328762,9.53720142 1.69813738,8.97607983 L16.2885768,0.236823587 C17.2334034,-0.329100579 17.9993368,0.11180583 17.9993368,1.20339155 L17.9993368,18.7981608 C17.9993368,19.8979057 17.2253854,20.3258504 16.2885768,19.7647288 L1.69813738,11.0254725 Z'></path>
                 <path d='M19.6988006,8.97607983 C18.7539739,9.542004 18.761992,10.4643509 19.6988006,11.0254725 L34.28924,19.7647288 C35.2340667,20.3306529 36,19.8897465 36,18.7981608 L36,1.20339155 C36,0.103646637 35.2260486,-0.324298001 34.28924,0.236823587 L19.6988006,8.97607983 Z'></path>
               </svg>
             </a>
-            <a class='play' (click)="togglePlay()">
+            <a class='play' (click)="togglePlay()" [ngClass]="{'disabled': disablePlay}">
               <svg *ngIf="!isPlayng" viewBox='0 0 36 42'>
                 <path d='M35.26504,19.9918476 C36.223232,20.5486348 36.2272024,21.4490581 35.26504,22.0081524 L1.73495997,41.4918476 C0.776768039,42.0486348 0,41.6018839 0,40.4980004 L0,1.50199958 C0,0.396325744 0.772797585,-0.0509419441 1.73495997,0.508152418 L35.26504,19.9918476 Z'></path>
               </svg>
@@ -58,8 +63,8 @@
             </a>
           </div>
           <div class='info'>
-            <h1>{{current.title}}</h1>
-            <h2>{{current.artist}}</h2>
+            <h1>{{currentTitle}}</h1>
+            <h2>{{currentArtist}}</h2>
           </div>
           <div class='controls bottom'>
             <a (click)="toggleAudio()">

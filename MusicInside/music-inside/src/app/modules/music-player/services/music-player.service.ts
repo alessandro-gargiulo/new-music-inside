@@ -26,4 +26,9 @@ export class MusicPlayerService {
     this._datastore.tracks.push(track);
     this._playlist.next(Object.assign({}, this._datastore).tracks);
   }
+
+  public removeTrack(index: number) {
+    this._datastore.tracks.splice(index, 1);
+    this._playlist.next(Object.assign({}, this._datastore).tracks);
+  }
 }

@@ -14,12 +14,18 @@ export class PlayerComponent implements OnInit {
 
   public playlist: Array<PlaylistTrack>;
 
-  public current: PlaylistTrack;
+  public currentTitle: string;
+  public currentArtist: string;
+  public currentTime: string;
+  public currentTotalTime: string;
 
   public isPlayng: boolean;
   public isAudio: boolean;
   public isPlaylist: boolean;
+
+  public disableBackward: boolean;
   public disableForward: boolean;
+  public disablePlay: boolean;
 
   public cursor: number;
 
@@ -27,14 +33,18 @@ export class PlayerComponent implements OnInit {
     this.isPlaylist = false;
     this.isPlayng = false;
     this.isAudio = true;
+
+    this.disableBackward = false;
     this.disableForward = false;
+    this.disablePlay = false;
 
     this.cursor = 0;
 
     this.playlist = new Array<PlaylistTrack>();
-    this.current = new PlaylistTrack();
-    this.current.songUrl = 'http://localhost:80//C.mp3';
-    this.current.fileType = 'audio/mpeg';
+    this.currentTitle = '';
+    this.currentArtist = '';
+    this.currentTime = '0:00';
+    this.currentTotalTime = '-:--';
   }
 
   ngOnInit() {
@@ -42,7 +52,16 @@ export class PlayerComponent implements OnInit {
       this.playlist = data;
       if (this.playlist != null && this.playlist != undefined && this.playlist.length != 0) {
         if (this.cursor >= this.playlist.length) this.cursor = this.playlist.length - 1;
-        this.current = this.playlist[this.cursor];
+        this.currentTitle = this.playlist[this.cursor].title;
+        this.currentArtist = this.playlist[this.cursor].artist;
+        this.setAudio(this.playlist[this.cursor].songUrl, this.playlist[this.cursor].fileType);
+        if (this.cursor < this.playlist.length - 1) this.disableForward = false;
+        this.disableBackward = false;
+        this.disablePlay = false;
+      } else {
+        this.disableBackward = true;
+        this.disableForward = true;
+        this.disablePlay = true;
       }
     }, error => {
       console.log("An error occurred when retrieve playlist from service.");
@@ -66,8 +85,35 @@ export class PlayerComponent implements OnInit {
 
   public skip(direction: number) {
     if (direction != -1 && direction != 1) return;
+    if (direction == 1 && this.disableForward) return;
+
+    if (this.isPlayng) {
+      switch (direction) {
+        case -1:
+          this.audioPlayer.nativeElement.currentTime = 0;
+          return;
+        case 1:
+          this.togglePlay();
+          break;
+        default:
+          break;
+      }
+    }
+
     this.cursor += direction;
-    this.current = this.playlist[this.cursor];
-    if (this.cursor == this.playlist.length) this.disableForward = true;
+    this.currentTitle = this.playlist[this.cursor].title;
+    this.currentArtist = this.playlist[this.cursor].artist;
+    this.setAudio(this.playlist[this.cursor].songUrl, this.playlist[this.cursor].fileType);
+    if (this.cursor == this.playlist.length - 1) this.disableForward = true;
+    else this.disableForward = false;
+  }
+
+  public removeFromPlaylist(index: number) {
+    this._plrSrv.removeTrack(index);
+  }
+
+  private setAudio(src: string, type: string) {
+    this.audioPlayer.nativeElement.src = src;
+    // TODO: Set media type
   }
 }

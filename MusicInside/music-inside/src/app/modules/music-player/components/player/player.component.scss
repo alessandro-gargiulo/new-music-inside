@@ -1,6 +1,7 @@
 $red: #EB2045;
 $grey: #0B0B0B;
 $black: #000000;
+$white: #FFFFFF;
 $p: 12px;
 $easeInBack: cubic-bezier(0.600, -0.280, 0.735, 0.045);
 $easeOutBack: cubic-bezier(0.175, 0.885, 0.320, 1.275);
@@ -123,6 +124,8 @@ main {
     list-style: none;
     padding: 0;
     margin: 0;
+    overflow-y: scroll;
+    height: calc(100% - 45px);
 
     .track-artist {
       margin-bottom: 4px;
@@ -133,6 +136,31 @@ main {
     .track-title {
       font-size: 16px;
       font-weight: 300;
+    }
+
+    .trash-icon {
+      display: none;
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    a{
+      &:hover{
+        .trash-icon{
+          display: inline-block;
+          &:hover{
+            svg{
+              fill: $white;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -237,7 +265,7 @@ main {
         pointer-events: none;
 
         svg {
-          fill: $grey;
+          fill: rgba($grey, .25);
         }
       }
     }
@@ -245,6 +273,14 @@ main {
     &.play {
       width: 42px;
       height: 36px;
+
+      &.disabled {
+        pointer-events: none;
+
+        svg {
+          fill: rgba($grey, .25);
+        }
+      }
     }
   }
 
