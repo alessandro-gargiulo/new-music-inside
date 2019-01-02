@@ -4,9 +4,9 @@ namespace MusicInside.Batch.Importer.Interfaces
 {
     interface IFlowHelper
     {
-        IEnumerable<string> GetValidSubFolders();
+        ICollection<string> GetValidSubFolders();
 
-        IEnumerable<string> GetValidFileNameInFolder(string folder);
+        ICollection<string> GetValidFileNameInFolder(string folder);
 
         TagLib.Tag GetTagFromFileNameInFolder(string folder, string file);
     }

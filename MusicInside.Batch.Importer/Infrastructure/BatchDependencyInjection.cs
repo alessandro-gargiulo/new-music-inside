@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MusicInside.Batch.Importer.Implementations;
+using MusicInside.Batch.Importer.Interfaces;
 using MusicInside.DataAccessLayer.Context;
 using NLog.Extensions.Logging;
 using System.IO;
@@ -33,6 +35,8 @@ namespace MusicInside.Batch.Importer.Infrastructure
                 })
                 .AddDbContext<MusicInsideDbContext>(options => options.UseSqlServer(conf.GetConnectionString("MusicInsideDatabase")))
                 .Configure<MusicFilesOptions>(conf.GetSection("MusicFiles"))
+                .AddSingleton<IFlowHelper, FlowHelper>()
+                .AddSingleton<IDbHelper, DbHelper>()
                 .BuildServiceProvider();
         }
     }

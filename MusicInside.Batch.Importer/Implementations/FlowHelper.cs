@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace MusicInside.Batch.Importer.Implementations
 {
-    public class FlowHelper : IDisposable, IFlowHelper
+    public class FlowHelper : IFlowHelper
     {
         private readonly ILogger<FlowHelper> _logger;
         private readonly MusicFilesOptions _options;
@@ -23,18 +23,17 @@ namespace MusicInside.Batch.Importer.Implementations
         {
             _logger = log;
             _options = options.Value;
-            _logger.LogDebug("FlowHelper | Constructor: Object was built, start to build members...");
-
+            _logger.LogDebug("FlowHelper | Constructor: Attempt to initialize members...");
             // Build folder regex from configuration
             _configuredFolderRegex = new Regex(_options.RegexSubFolder);
             // Build extensions regex retrieving allowed extensions
             StringBuilder buildRegexString = new StringBuilder(@"(\.");
             buildRegexString.Append(string.Join(@"$|\.", _options.AvailableExtensions)).Append("$)");
             _allowedExtensionRegex = new Regex(buildRegexString.ToString());
-            _logger.LogDebug("FlowHelper | Constructor: members correctly built from configurations.");
+            _logger.LogDebug("FlowHelper | Constructor: Initialization completed.");
         }
 
-        public IEnumerable<string> GetValidSubFolders()
+        public ICollection<string> GetValidSubFolders()
         {
             try
             {
@@ -51,7 +50,7 @@ namespace MusicInside.Batch.Importer.Implementations
             }
         }
 
-        public IEnumerable<string> GetValidFileNameInFolder(string folder)
+        public ICollection<string> GetValidFileNameInFolder(string folder)
         {
             try
             {
@@ -83,11 +82,6 @@ namespace MusicInside.Batch.Importer.Implementations
                 _logger.LogError("FlowHelper | GetTagFromFileNameInFolder: Can't read tag of file /{0}/{1} due to exception [{2}]", folder, file, ex.Message);
                 return null;
             }
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
     }
 }
