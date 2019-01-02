@@ -1,0 +1,25 @@
+<!-- Song List -->
+<mat-grid-list cols="4" rowHeight="300">
+  <mat-grid-tile *ngFor="let song of songs;let i = index">
+    <mat-grid-tile-header>
+      <div class="header-title">
+        {{song.title}}
+      </div>
+      <div class="header-artist">
+        {{song.artist}}
+      </div>
+      <div class="fake-blur" [ngStyle]="{'background-image': getCssBackgroundRuleUrl(song.coverUrl)}"></div>
+    </mat-grid-tile-header>
+    <div class="tile-body">
+      <img [src]="song.coverUrl" />
+    </div>
+    <mat-grid-tile-footer>
+      <div class="footer-statistic">
+        Listen: 4
+      </div>
+      <a class="footer-playlist-control" (click)="addToPlaylist(i)">
+        <i class="fas fa-plus-circle"></i>
+      </a>
+    </mat-grid-tile-footer>
+  </mat-grid-tile>
+</mat-grid-list>

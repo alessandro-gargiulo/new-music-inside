@@ -1,0 +1,24 @@
+<app-sidebar></app-sidebar>
+
+<div class="app-router-content">
+
+  <router-outlet></router-outlet>
+</div>
+
+<div class="app-player-content" [ngClass]="{'closed' : !playerOpen}">
+
+  <div class="player-helper player-opener" (click)="togglePlayer()" [hidden]="playerOpen">
+    <a>
+      <i class="fas fa-drum fa-2x"></i>
+    </a>
+  </div>
+
+  <div class="player-helper player-closer" (click)="togglePlayer()" [hidden]="!playerOpen">
+    <a>
+      <i class="far fa-eye-slash fa-2x"></i>
+    </a>
+  </div>
+
+  <app-music-player></app-music-player>
+
+</div>
