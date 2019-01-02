@@ -15,7 +15,6 @@ namespace MusicInside.Batch.Importer.Implementations
     {
         private readonly ILogger<FlowHelper> _logger;
         private readonly MusicFilesOptions _options;
-        private readonly string _fileMusicRoot;
         private readonly Regex _configuredFolderRegex;
         private readonly Regex _allowedExtensionRegex;
 
