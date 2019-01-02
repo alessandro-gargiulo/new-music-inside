@@ -4,6 +4,7 @@ bin/
 obj/
 dist/
 .vs/
+package-lock.json
 
 
 # Compiled source #
