@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSnackBarModule, MatSnackBar, MatSnackBarContainer } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OverlayModule } from "@angular/cdk/overlay";
 
 import { AppComponent } from 'src/app/app.component';
 import { MusicPlayerModule } from 'src/app/modules/music-player/music-player.module';
@@ -27,11 +30,17 @@ import { AboutMeComponent } from 'src/app/components/about-me/about-me.component
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     MusicPlayerModule.forRoot(),
-    MatGridListModule
+    MatGridListModule,
+    MatSnackBarModule,
+    OverlayModule
   ],
   providers: [
-
+    MatSnackBar
+  ],
+  entryComponents: [
+    MatSnackBarContainer
   ],
   bootstrap: [AppComponent]
 })

@@ -40,4 +40,10 @@
     <TypeScriptCompile Include="music-inside\src\app\shared\song-tile.model.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="music-inside\src\assets\music_placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

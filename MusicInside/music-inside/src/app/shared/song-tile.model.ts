@@ -6,4 +6,6 @@ export class SongTile {
   public coverUrl: string;
   public fileUrl: string;
   public fileType: string;
+  public statCount: number;
+  public statWhen: string;
 }

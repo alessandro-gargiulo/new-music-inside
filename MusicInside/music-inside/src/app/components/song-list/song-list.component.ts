@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SongTile } from 'src/app/shared/song-tile.model';
 import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-song-list',
@@ -11,7 +12,11 @@ export class SongListComponent implements OnInit {
 
   public songs: Array<SongTile>;
 
-  constructor(private _plrSrv : MusicPlayerService) {
+  constructor
+    (
+    private _plrSrv: MusicPlayerService,
+    private _snackBar: MatSnackBar
+  ) {
     this.songs = new Array<SongTile>();
     this.songs.push({
       id: 0,
@@ -20,7 +25,9 @@ export class SongListComponent implements OnInit {
       album: 'Titolo Album',
       coverUrl: 'http://localhost:80//2_1.png',
       fileUrl: 'http://localhost:80//A.mp3',
-      fileType: 'audio/mpeg'
+      fileType: 'audio/mpeg',
+      statCount: 4,
+      statWhen: '25 Dec 2018'
     });
     this.songs.push({
       id: 1,
@@ -29,7 +36,9 @@ export class SongListComponent implements OnInit {
       album: 'Titolo Album',
       coverUrl: 'http://localhost:80//4_2.png',
       fileUrl: 'http://localhost:80//B.mp3',
-      fileType: 'audio/mpeg'
+      fileType: 'audio/mpeg',
+      statCount: 4,
+      statWhen: '25 Dec 2018'
     });
     this.songs.push({
       id: 2,
@@ -38,7 +47,9 @@ export class SongListComponent implements OnInit {
       album: 'Titolo Album',
       coverUrl: 'http://localhost:80//6_3.png',
       fileUrl: 'http://localhost:80//C.mp3',
-      fileType: 'audio/mpeg'
+      fileType: 'audio/mpeg',
+      statCount: 4,
+      statWhen: '25 Dec 2018'
     });
   }
 
@@ -53,6 +64,7 @@ export class SongListComponent implements OnInit {
       songUrl: this.songs[index].fileUrl,
       fileType: this.songs[index].fileType
     });
+    this._snackBar.open(`${this.songs[index].title} added to playlist.`, 'Dismiss', { duration: 5000 });
   }
 
   public getCssBackgroundRuleUrl(url: string): string {
