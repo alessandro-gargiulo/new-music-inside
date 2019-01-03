@@ -16,6 +16,7 @@ export class PlayerComponent implements OnInit {
 
   public currentTitle: string;
   public currentArtist: string;
+  public currentCoverUrl: string;
   public currentTime: string;
   public currentTotalTime: string;
 
@@ -45,6 +46,7 @@ export class PlayerComponent implements OnInit {
     this.playlist = new Array<PlaylistTrack>();
     this.currentTitle = '';
     this.currentArtist = '';
+    this.currentCoverUrl = 'assets//music_placeholder.png';
     this.currentTime = '0:00';
     this.currentTotalTime = '-:--';
   }
@@ -62,6 +64,7 @@ export class PlayerComponent implements OnInit {
         // Set the current song
         this.currentTitle = this.playlist[this.cursor].title;
         this.currentArtist = this.playlist[this.cursor].artist;
+        this.currentCoverUrl = this.playlist[this.cursor].coverUrl;
         this.setAudio(this.playlist[this.cursor].songUrl, this.playlist[this.cursor].fileType);
 
         // Check if the cursor points to the last element of the list
@@ -103,7 +106,7 @@ export class PlayerComponent implements OnInit {
   public skip(direction: number) {
     if (direction != -1 && direction != 1) return;
     if (direction == 1 && this.disableForward) return;
-
+    if (this.cursor == 0 && direction == -1) return;
     if (this.isPlayng) {
       switch (direction) {
         case -1:
@@ -120,6 +123,7 @@ export class PlayerComponent implements OnInit {
     this.cursor += direction;
     this.currentTitle = this.playlist[this.cursor].title;
     this.currentArtist = this.playlist[this.cursor].artist;
+    this.currentCoverUrl = this.playlist[this.cursor].coverUrl;
     this.setAudio(this.playlist[this.cursor].songUrl, this.playlist[this.cursor].fileType);
     if (this.cursor == this.playlist.length - 1) this.disableForward = true;
     else this.disableForward = false;
