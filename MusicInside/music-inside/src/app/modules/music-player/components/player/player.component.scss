@@ -7,6 +7,8 @@ $easeInBack: cubic-bezier(0.600, -0.280, 0.735, 0.045);
 $easeOutBack: cubic-bezier(0.175, 0.885, 0.320, 1.275);
 $easeOutCubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
 
+$playerMaxWidth: 320px;
+
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -43,14 +45,14 @@ hr {
 
 main {
   width: 100%;
-  max-width: 320px;
+  max-width: $playerMaxWidth;
 }
 
 .player {
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: 320px;
+  max-width: $playerMaxWidth;
 
   .back {
     opacity: 0;
@@ -212,7 +214,7 @@ main {
   }
 
   hr {
-    transform: translateX(-50%);
+    margin-left: -$playerMaxWidth;
     margin-bottom: 0;
     padding: 0;
     border: 0;

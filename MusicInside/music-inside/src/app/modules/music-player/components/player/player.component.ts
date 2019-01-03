@@ -28,6 +28,7 @@ export class PlayerComponent implements OnInit {
   public disablePlay: boolean;
 
   public cursor: number;
+  public barMarginLeft: number;
 
   constructor(private _plrSrv: MusicPlayerService) {
     this.isPlaylist = false;
@@ -39,6 +40,7 @@ export class PlayerComponent implements OnInit {
     this.disablePlay = false;
 
     this.cursor = 0;
+    this.barMarginLeft = -320;
 
     this.playlist = new Array<PlaylistTrack>();
     this.currentTitle = '';
@@ -50,15 +52,30 @@ export class PlayerComponent implements OnInit {
   ngOnInit() {
     this._plrSrv.playlist.subscribe(data => {
       this.playlist = data;
+      // Check if data is not null and contains at least one element
       if (this.playlist != null && this.playlist != undefined && this.playlist.length != 0) {
-        if (this.cursor >= this.playlist.length) this.cursor = this.playlist.length - 1;
+        // Data contains at least one element
+        if (this.cursor >= this.playlist.length) {
+          // If the cursor point to a removed element, point to the last element
+          this.cursor = this.playlist.length - 1;
+        }
+        // Set the current song
         this.currentTitle = this.playlist[this.cursor].title;
         this.currentArtist = this.playlist[this.cursor].artist;
         this.setAudio(this.playlist[this.cursor].songUrl, this.playlist[this.cursor].fileType);
-        if (this.cursor < this.playlist.length - 1) this.disableForward = false;
+
+        // Check if the cursor points to the last element of the list
+        if (this.cursor == this.playlist.length - 1) {
+          // The cursor points to last element, disable forward
+          this.disableForward = true;
+        } else {
+          this.disableForward = false;
+        }
+        // The list contains more than one element: activate controls
         this.disableBackward = false;
         this.disablePlay = false;
       } else {
+        // Data is empty: disable all controls
         this.disableBackward = true;
         this.disableForward = true;
         this.disablePlay = true;
@@ -112,8 +129,33 @@ export class PlayerComponent implements OnInit {
     this._plrSrv.removeTrack(index);
   }
 
+  public updatePosition(): void {
+    let totalSeconds = this.audioPlayer.nativeElement.currentTime;
+    let minutes = Math.floor(totalSeconds / 60);
+    var seconds = Math.floor(totalSeconds - minutes * 60);
+    this.currentTime = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+
+    try {
+      let perc = Math.floor((totalSeconds * 100) / this.audioPlayer.nativeElement.seekable.end(0));
+      let toDiff = -3.2 * perc;
+      this.barMarginLeft = -320 - toDiff;
+      console.log(`[perc=${perc}][toDiff=${toDiff}][margin=${this.barMarginLeft}]`);
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  public updateDuration(): void {
+    let totalSeconds = this.audioPlayer.nativeElement.seekable.end(0);
+    let minutes = Math.floor(totalSeconds / 60);
+    var seconds = Math.floor(totalSeconds - minutes * 60);
+    this.currentTotalTime = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+  }
+
   private setAudio(src: string, type: string) {
     this.audioPlayer.nativeElement.src = src;
+    this.currentTime = '0:00';
     // TODO: Set media type
   }
 }
