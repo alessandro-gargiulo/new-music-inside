@@ -1,4 +1,5 @@
 ﻿using MusicInside.DataAccessLayer.AssociationClasses;
+using System;
 using System.Collections.Generic;
 
 namespace MusicInside.DataAccessLayer.Models
@@ -12,11 +13,11 @@ namespace MusicInside.DataAccessLayer.Models
         public string Surname { get; set; }
         public int BirthYear { get; set; }
         public bool IsBand { get; set; }
+        public DateTime CreatedOn { get; set; }
         #endregion
 
         #region Navigation Properties
         public IList<SongArtist> Songs { get; set; }
         #endregion
-
     }
 }

@@ -16,6 +16,7 @@ namespace MusicInside.DataAccessLayer.Context
         public DbSet<Album> Albums { get; set; }
         public DbSet<CoverFile> Covers { get; set; }
         public DbSet<MediaFile> Medias { get; set; }
+        public DbSet<Slide> Slides { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,6 +29,7 @@ namespace MusicInside.DataAccessLayer.Context
             modelBuilder.ApplyConfiguration(new GenreConfiguration());
             modelBuilder.ApplyConfiguration(new MomentConfiguration());
             modelBuilder.ApplyConfiguration(new StatisticConfiguration());
+            modelBuilder.ApplyConfiguration(new SlideConfiguration());
 
             modelBuilder.ApplyConfiguration(new SongGenreConfiguration());
             modelBuilder.ApplyConfiguration(new SongArtistConfiguration());

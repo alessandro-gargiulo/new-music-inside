@@ -1,4 +1,5 @@
 ﻿using MusicInside.DataAccessLayer.AssociationClasses;
+using System;
 using System.Collections.Generic;
 
 namespace MusicInside.DataAccessLayer.Models
@@ -10,6 +11,7 @@ namespace MusicInside.DataAccessLayer.Models
         public string Title { get; set; }
         public int TrackNo { get; set; }
         public int Year { get; set; }
+        public DateTime CreatedOn { get; set; }
         #endregion
 
         #region Navigation Properties

@@ -133,6 +133,14 @@ namespace MusicInside.DataAccessLayer.Context
             builder.ToTable("Statistic");
         }
     }
+
+    public class SlideConfiguration : IEntityTypeConfiguration<Slide>
+    {
+        public void Configure(EntityTypeBuilder<Slide> builder)
+        {
+            builder.ToTable("Slide");
+        }
+    }
     #endregion
 
     #region Association Class Configurations

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicInside.DataAccessLayer.Context;
 
 namespace MusicInside.DataAccessLayer.Migrations
 {
     [DbContext(typeof(MusicInsideDbContext))]
-    partial class MusicInsideDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190104141144_add-created-on")]
+    partial class addcreatedon
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,33 +172,6 @@ namespace MusicInside.DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Moment");
-                });
-
-            modelBuilder.Entity("MusicInside.DataAccessLayer.Models.Slide", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AltText");
-
-                    b.Property<string>("Header");
-
-                    b.Property<int>("Order");
-
-                    b.Property<string>("Section");
-
-                    b.Property<string>("Source");
-
-                    b.Property<string>("Text");
-
-                    b.Property<DateTime>("ValidityFrom");
-
-                    b.Property<DateTime>("ValidityTo");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Slide");
                 });
 
             modelBuilder.Entity("MusicInside.DataAccessLayer.Models.Song", b =>
