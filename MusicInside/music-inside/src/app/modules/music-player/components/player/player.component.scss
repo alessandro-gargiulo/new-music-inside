@@ -30,10 +30,6 @@ a {
   cursor: pointer;
 }
 
-/*body, html {
-  height: 100%;
-}*/
-
 hr {
   border: 0;
   margin: 0;
@@ -317,6 +313,8 @@ main {
   &.bottom {
     justify-content: space-between;
     padding: $p*1.5 $p $p;
+    position: absolute;
+    bottom: 0;
 
     a {
       width: 24px;
@@ -361,6 +359,7 @@ main {
 
 .meta {
   text-align: center;
+  height: 220px;
 
   time {
     display: flex;
@@ -403,7 +402,7 @@ main {
 }
 
 @media only screen and (max-height: 510px) {
-  .container {
+  .player-container {
     transform-origin: center center;
     transform: scale(0.75);
   }

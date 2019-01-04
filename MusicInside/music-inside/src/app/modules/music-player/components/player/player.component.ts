@@ -31,6 +31,8 @@ export class PlayerComponent implements OnInit {
   public cursor: number;
   public barMarginLeft: number;
 
+  private _ghostTrack: PlaylistTrack;
+
   constructor(private _plrSrv: MusicPlayerService) {
     this.isPlaylist = false;
     this.isPlayng = false;
@@ -44,10 +46,14 @@ export class PlayerComponent implements OnInit {
     this.barMarginLeft = -320;
 
     this.playlist = new Array<PlaylistTrack>();
-    this.currentTitle = '';
-    this.currentArtist = '';
-    this.currentCoverUrl = 'assets//music_placeholder.png';
-    this.currentTime = '0:00';
+
+    this._ghostTrack = {
+      title: '',
+      artist: '',
+      coverUrl: 'assets//music_placeholder.png',
+      songUrl: '',
+      fileType: ''
+    }
     this.currentTotalTime = '-:--';
   }
 
@@ -61,11 +67,10 @@ export class PlayerComponent implements OnInit {
           // If the cursor point to a removed element, point to the last element
           this.cursor = this.playlist.length - 1;
         }
-        // Set the current song
-        this.currentTitle = this.playlist[this.cursor].title;
-        this.currentArtist = this.playlist[this.cursor].artist;
-        this.currentCoverUrl = this.playlist[this.cursor].coverUrl;
-        this.setAudio(this.playlist[this.cursor].songUrl, this.playlist[this.cursor].fileType);
+        // Set the current song if not in play
+        if (!this.isPlayng) {
+          this.setAudio(this.playlist[this.cursor]);
+        }
 
         // Check if the cursor points to the last element of the list
         if (this.cursor == this.playlist.length - 1) {
@@ -78,6 +83,7 @@ export class PlayerComponent implements OnInit {
         this.disableBackward = false;
         this.disablePlay = false;
       } else {
+        this.setAudio(this._ghostTrack);
         // Data is empty: disable all controls
         this.disableBackward = true;
         this.disableForward = true;
@@ -104,32 +110,75 @@ export class PlayerComponent implements OnInit {
   }
 
   public skip(direction: number) {
-    if (direction != -1 && direction != 1) return;
-    if (direction == 1 && this.disableForward) return;
-    if (this.cursor == 0 && direction == -1) return;
-    if (this.isPlayng) {
-      switch (direction) {
-        case -1:
-          this.audioPlayer.nativeElement.currentTime = 0;
+    console.log('Cursor before: ' + this.cursor);
+    switch (direction) {
+      case -1:
+        if (!this.disableBackward) {
+          // Backward
+          if (this.isPlayng) {
+            // Player is in play
+            this.audioPlayer.nativeElement.currentTime = 0;
+          } else {
+            // Player is paused
+            if (this.cursor > 0) {
+              this.cursor += -1;
+              this.setAudio(this.playlist[this.cursor]);
+            } else {
+              this.audioPlayer.nativeElement.currentTime = 0;
+            }
+          }
+        } else {
+          // Backward is disabled!
           return;
-        case 1:
-          this.togglePlay();
-          break;
-        default:
-          break;
-      }
+        }
+        break;
+
+      case 1:
+        if (!this.disableForward) {
+          // Forward
+          this.cursor += 1;
+          this.setAudio(this.playlist[this.cursor]);
+        } else {
+          // Forward is disabled!
+          return;
+        }
+        break;
+      default:
+        console.log(`Invalid direction: ${direction}`);
+        return;
     }
 
-    this.cursor += direction;
-    this.currentTitle = this.playlist[this.cursor].title;
-    this.currentArtist = this.playlist[this.cursor].artist;
-    this.currentCoverUrl = this.playlist[this.cursor].coverUrl;
-    this.setAudio(this.playlist[this.cursor].songUrl, this.playlist[this.cursor].fileType);
-    if (this.cursor == this.playlist.length - 1) this.disableForward = true;
-    else this.disableForward = false;
+    console.log('Cursor after: ' + this.cursor);
+
+    if (this.cursor == 0) {
+      this.disableBackward = true;
+    } else {
+      this.disableBackward = false;
+    }
+
+    if (this.cursor == this.playlist.length - 1) {
+      this.disableForward = true;
+    } else {
+      this.disableForward = false;
+    }
   }
 
   public removeFromPlaylist(index: number) {
+    if (this.cursor == index) {
+      if (this.isPlayng) {
+        // Can't remove an element if it is in play
+        return
+      } else {
+        // Can remove a selected element (ready for play) but it must be in pause
+        if (this.playlist.length >= 2) {
+          // If playlist has at least 2 elements, decrement cursor
+          this.cursor += -1;
+        } else {
+          // If playlist has 1 or no element (limit-case) restart from 0
+          this.cursor = 0;
+        }
+      }
+    }
     this._plrSrv.removeTrack(index);
   }
 
@@ -157,9 +206,14 @@ export class PlayerComponent implements OnInit {
     this.currentTotalTime = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
   }
 
-  private setAudio(src: string, type: string) {
-    this.audioPlayer.nativeElement.src = src;
+  private setAudio(track: PlaylistTrack) {
+    this.isPlayng = false;
+    this.currentTitle = track.title;
+    this.currentArtist = track.artist;
+    this.currentCoverUrl = track.coverUrl;
+    this.audioPlayer.nativeElement.src = track.songUrl;
     this.currentTime = '0:00';
+    this.barMarginLeft = -320;
     // TODO: Set media type
   }
 }
