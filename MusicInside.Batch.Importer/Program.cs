@@ -5,6 +5,7 @@ using MusicInside.Batch.Importer.Infrastructure;
 using MusicInside.Batch.Importer.Interfaces;
 using System;
 using System.Collections.Generic;
+using TagLib;
 
 namespace MusicInside.Batch.Importer
 {
@@ -48,12 +49,54 @@ namespace MusicInside.Batch.Importer
                         logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++");
                         logger.LogInformation("++ Attempt to process file {0} ++", file);
                         logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++");
-                        var fileTag = flowHelper.GetTagFromFileNameInFolder(folder, file);
+                        Tag fileTag = flowHelper.GetTagFromFileNameInFolder(folder, file);
 
                         // Begin transaction
                         IDbContextTransaction transaction = dbHelper.BeginTransaction();
                         try
                         {
+                            // Attempt to search for an album with the same name and linked to the same artist
+                            int albumId = dbHelper.ExistAlbum(fileTag.Album, fileTag.FirstAlbumArtist);
+                            if(albumId == -1)
+                            {
+                                // If the linked album doesn't exist, create a new one
+                                albumId = dbHelper.CreateAlbum(fileTag);
+                            }
+                            // Create an empty statistic entry
+                            int statisticId = dbHelper.CreateEmptyStatistic();
+                            // Create the media file entry
+                            int mediaFileId = dbHelper.CreateMediaFile(fileTag, albumId);
+
+                            // Create the song entry
+                            int songId = dbHelper.CreateSong(fileTag, statisticId, albumId, mediaFileId);
+
+                            // Attempt to search for an artist who composed the album of the song
+                            int artistId = dbHelper.ExistArtistForAlbum(albumId, fileTag.FirstAlbumArtist);
+                            if(artistId == -1)
+                            {
+                                // If the linked artist does not exist, create a new one
+                                artistId = dbHelper.CreateArtist(fileTag.FirstAlbumArtist);
+                            }
+
+                            // Link the newly created artist as the principal artist of the song
+                            dbHelper.LinkArtist(artistId, true, songId);
+
+                            // For the other artist (featured)
+                            foreach(var featArtist in fileTag.AlbumArtists)
+                            {
+                                int featArtistId = dbHelper.ExistArtist(featArtist);
+                                if(featArtistId == -1)
+                                {
+                                    featArtistId = dbHelper.CreateArtist(featArtist);
+                                }
+                                dbHelper.LinkArtist(featArtistId, false, songId);
+                            }
+
+                            foreach (var genre in fileTag.Genres)
+                            {
+                                int genreId = dbHelper.CreateGenre(genre);
+                                dbHelper.LinkGenre(genreId, songId);
+                            }
 
                             transaction.Commit();
                         }

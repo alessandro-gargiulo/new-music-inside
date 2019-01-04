@@ -44,56 +44,91 @@ namespace MusicInside.Batch.Importer.Implementations
         #endregion
 
         #region Database Existing Entities Check
-        public bool ExistArtist(string artName)
+        public int ExistArtist(string artName)
         {
-            return _context.Artists.Any(x => x.ArtName.Equals(artName));
+            _logger.LogInformation("ExistArtist | Attempt to search the existence of the artist with [artist={0}]", artName);
+            int foundedId = -1;
+            bool condition = _context.Artists.Any(x => x.ArtName.Equals(artName));
+            if (condition)
+                foundedId = _context.Artists.Where(x => x.ArtName.Equals(artName)).FirstOrDefault().Id;
+            return foundedId;
         }
 
-        public bool ExistArtist(string artName, bool isBand)
+        public int ExistArtist(string artName, bool isBand)
         {
-            return _context.Artists.Any(x => x.ArtName.Equals(artName) && x.IsBand == isBand);
+            _logger.LogInformation("ExistArtist | Attempt to search the existence of the artist with [artist={0}][isBand={1}]", artName, isBand);
+            int foundedId = -1;
+            bool condition = _context.Artists.Any(x => x.ArtName.Equals(artName) && x.IsBand == isBand);
+            if (condition)
+                foundedId = _context.Artists.Where(x => x.ArtName.Equals(artName) && x.IsBand == isBand).FirstOrDefault().Id;
+            return foundedId;
         }
 
-        public bool ExistArtist(string artName, string name, string surname)
+        public int ExistAlbum(string title, string artistArtName)
         {
-            return _context.Artists.Any(x => x.ArtName.Equals(artName) && x.Name.Equals(name) && x.Surname.Equals(surname));
-        }
-
-        public bool ExistArtist(string artName, string name, string surname, bool isBand)
-        {
-            return _context.Artists.Any(x => x.ArtName.Equals(artName) && x.Name.Equals(name) && x.Surname.Equals(surname) && x.IsBand == isBand);
-        }
-
-        public bool ExistGenre(string genre)
-        {
-            return _context.Genres.Any(x => x.Description.Equals(genre));
-        }
-
-        public bool ExistSong(string title, string albumName, string artistName)
-        {
-            _logger.LogDebug("ExistSong | Attempt to search the existence of the song with [title={0}][album={1}][artist={2}]", title, albumName, artistName);
+            _logger.LogInformation("ExistAlbum | Attempt to search the existence of the album with [title={0}][artist={2}]", title, artistArtName);
+            int foundedId = -1;
             // Retrieve all candidates
-            List<Song> candidates = _context.Songs.Where(x => x.Title.Equals(title)).ToList();
-            if (candidates.Count == 0) return false;
-
-            // To proceed with the tests, at least one candidate must have an album with the specified name
-            if (!candidates.Any(x => x.Album.Title.Equals(albumName))) return false;
-            // Filter list
-            candidates.RemoveAll(x => !x.Album.Title.Equals(albumName));
-
-            // To proceed with the test, at least one candidate must have the specified artist
-            if (!candidates.Any(x => x.Artists.Any(y => y.IsPrincipalArtist && y.Artist.Name.Equals(artistName)))) return false;
-
-            // At this point some candidates survive to filtering and the song exist
-            return true;
+            List<Album> candidates = _context.Albums.Where(x => x.Title.Equals(title)).ToList();
+            _logger.LogDebug("ExistAlbum | Found {0} candidates", candidates.Count);
+            if (candidates.Count == 0) return foundedId;
+            bool condition = candidates.Any(c => c.Songs.Any(s => s.Artists.Any(a => a.IsPrincipalArtist && a.Artist.ArtName.Equals(artistArtName))));
+            _logger.LogDebug("ExistAlbum | Album found? {0}", condition);
+            if(condition)
+                foundedId = candidates.Where(c => c.Songs.Any(s => s.Artists.Any(a => a.IsPrincipalArtist && a.Artist.ArtName.Equals(artistArtName)))).FirstOrDefault().Id;
+            return foundedId;
         }
 
-        public void InsertSong(Tag tag)
+        public int ExistArtistForAlbum(int albumId, string artName)
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateSong(Tag tag)
+        public int ExistArtistForAlbum(int albumId, string artName, bool isBand)
+        {
+            throw new System.NotImplementedException();
+        }
+        #endregion
+
+        #region Create Entry In Database
+        public int CreateAlbum(Tag tag)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int CreateEmptyStatistic()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int CreateMediaFile(Tag tag, int albumId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int CreateSong(Tag tag, int statisticId, int albumId, int mediaFileId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int CreateArtist(string artName)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int CreateGenre(string genre)
+        {
+            throw new System.NotImplementedException();
+        }
+        #endregion
+
+        #region Link Entities
+        public void LinkArtist(int artistId, bool isPrincipalArtist, int songId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void LinkGenre(int genreId, int songId)
         {
             throw new System.NotImplementedException();
         }

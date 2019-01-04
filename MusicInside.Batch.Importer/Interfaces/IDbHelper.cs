@@ -8,17 +8,24 @@ namespace MusicInside.Batch.Importer.Interfaces
         IDbContextTransaction BeginTransaction();
         void CommitTransaction();
         void RollbackTransaction();
+       
+        int ExistAlbum(string title, string artistArtName);
 
-        bool ExistGenre(string genre);
+        int CreateAlbum(Tag tag);
+        int CreateEmptyStatistic();
+        int CreateMediaFile(Tag tag, int albumId);
 
-        bool ExistArtist(string artName);
-        bool ExistArtist(string artName, bool isBand);
-        bool ExistArtist(string artName, string name, string surname);
-        bool ExistArtist(string artName, string name, string surname, bool isBand);
+        int CreateSong(Tag tag, int statisticId, int albumId, int mediaFileId);
 
-        bool ExistSong(string title, string albumName, string artist);
+        int ExistArtist(string artName);
+        int ExistArtist(string artName, bool isBand);
+        int ExistArtistForAlbum(int albumId, string artName);
+        int ExistArtistForAlbum(int albumId, string artName, bool isBand);
 
-        void InsertSong(Tag tag);
-        void UpdateSong(Tag tag);
+        int CreateArtist(string artName);
+        void LinkArtist(int artistId, bool isPrincipalArtist, int songId);
+
+        int CreateGenre(string genre);
+        void LinkGenre(int genreId, int songId);
     }
 }
