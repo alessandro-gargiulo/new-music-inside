@@ -4,6 +4,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule, MatSnackBar, MatSnackBarContainer } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from "@angular/cdk/overlay";
+import { NgbCarouselModule } from "@ng-bootstrap/ng-bootstrap"
 
 import { AppComponent } from 'src/app/app.component';
 import { MusicPlayerModule } from 'src/app/modules/music-player/music-player.module';
@@ -34,6 +35,7 @@ import { AboutMeComponent } from 'src/app/components/about-me/about-me.component
     MusicPlayerModule.forRoot(),
     MatGridListModule,
     MatSnackBarModule,
+    NgbCarouselModule,
     OverlayModule
   ],
   providers: [

@@ -1,0 +1,20 @@
+$carousel-height: 310px;
+
+.carousel-container {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  ::ng-deep {
+    .carousel-inner {
+      height: $carousel-height;
+
+      .carousel-item {
+        height: $carousel-height;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
