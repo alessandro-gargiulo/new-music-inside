@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MusicInside.Batch.Importer.Exceptions;
@@ -76,10 +77,10 @@ namespace MusicInside.Batch.Importer.Implementations
             List<Album> candidates = _context.Albums.Where(x => x.Title.Equals(title)).ToList();
             _logger.LogDebug("ExistAlbum|Found {0} candidates", candidates.Count);
             if (candidates.Count == 0) return foundedId;
-            bool condition = candidates.Any(c => c.Songs.Any(s => s.Artists.Any(a => a.IsPrincipalArtist && a.Artist.ArtName.Equals(artistArtName))));
+            bool condition = candidates.Any(c => c.Songs.Any(s => s.Artists.Any(a => (a.IsPrincipalArtist.HasValue && a.IsPrincipalArtist.Value && a.Artist.ArtName.Equals(artistArtName)) || (!a.IsPrincipalArtist.HasValue && a.Artist.ArtName.Equals(artistArtName)))));
             _logger.LogDebug("ExistAlbum|Album found? {0}", condition);
             if(condition)
-                foundedId = candidates.Where(c => c.Songs.Any(s => s.Artists.Any(a => a.IsPrincipalArtist && a.Artist.ArtName.Equals(artistArtName)))).FirstOrDefault().Id;
+                foundedId = candidates.Where(c => c.Songs.Any(s => s.Artists.Any(a => (a.IsPrincipalArtist.HasValue && a.IsPrincipalArtist.Value && a.Artist.ArtName.Equals(artistArtName)) || (!a.IsPrincipalArtist.HasValue && a.Artist.ArtName.Equals(artistArtName))))).FirstOrDefault().Id;
             return foundedId;
         }
 
@@ -88,15 +89,15 @@ namespace MusicInside.Batch.Importer.Implementations
             _logger.LogInformation("ExistArtistForAlbum|Attempt to search the existence of the album with [albumId={0}][artist={1}]", albumId, artName);
             int foundedId = -1;
             // Retrieve single candidate
-            Album album = _context.Albums.Where(x => x.Id == albumId).FirstOrDefault();
+            Album album = _context.Albums.Include(i => i.Songs).ThenInclude(k => k.Artists).Where(x => x.Id == albumId).FirstOrDefault();
             if(album != null)
             {
-                bool condition = album.Songs.Any(s => s.Artists.Any(a => a.IsPrincipalArtist && a.Artist.ArtName.Equals(artName)));
+                bool condition = album.Songs.Any(s => s.Artists.Any(a => (a.IsPrincipalArtist.HasValue && a.IsPrincipalArtist.Value && a.Artist.ArtName.Equals(artName)) || (!a.IsPrincipalArtist.HasValue && a.Artist.ArtName.Equals(artName))));
                 _logger.LogDebug("ExistArtistForAlbum|Artist found? {0}", condition);
                 if (condition)
                 {
-                    var candidateSong = album.Songs.Where(s => s.Artists.Any(a => a.IsPrincipalArtist && a.Artist.ArtName.Equals(artName))).FirstOrDefault();
-                    foundedId = candidateSong.Artists.FirstOrDefault(x => x.IsPrincipalArtist && x.Artist.ArtName.Equals(artName)).Id;
+                    var candidateSong = album.Songs.Where(s => s.Artists.Any(a => (a.IsPrincipalArtist.HasValue && a.IsPrincipalArtist.Value && a.Artist.ArtName.Equals(artName)) || (!a.IsPrincipalArtist.HasValue && a.Artist.ArtName.Equals(artName)))).FirstOrDefault();
+                    foundedId = candidateSong.Artists.FirstOrDefault(a => (a.IsPrincipalArtist.HasValue && a.IsPrincipalArtist.Value && a.Artist.ArtName.Equals(artName)) || (!a.IsPrincipalArtist.HasValue && a.Artist.ArtName.Equals(artName))).Id;
                 }
                 return foundedId;
             }
@@ -114,12 +115,12 @@ namespace MusicInside.Batch.Importer.Implementations
             Album album = _context.Albums.Where(x => x.Id == albumId).FirstOrDefault();
             if (album != null)
             {
-                bool condition = album.Songs.Any(s => s.Artists.Any(a => a.IsPrincipalArtist && a.Artist.ArtName.Equals(artName) && a.Artist.IsBand == isBand));
+                bool condition = album.Songs.Any(s => s.Artists.Any(a => a.IsPrincipalArtist.Value && a.Artist.ArtName.Equals(artName) && a.Artist.IsBand.Value == isBand));
                 _logger.LogDebug("ExistArtistForAlbum|Artist found? {0}", condition);
                 if (condition)
                 {
-                    var candidateSong = album.Songs.Where(s => s.Artists.Any(a => a.IsPrincipalArtist && a.Artist.ArtName.Equals(artName) && a.Artist.IsBand == isBand)).FirstOrDefault();
-                    foundedId = candidateSong.Artists.FirstOrDefault(x => x.IsPrincipalArtist && x.Artist.ArtName.Equals(artName) && x.Artist.IsBand == isBand).Id;
+                    var candidateSong = album.Songs.Where(s => s.Artists.Any(a => a.IsPrincipalArtist.Value && a.Artist.ArtName.Equals(artName) && a.Artist.IsBand == isBand)).FirstOrDefault();
+                    foundedId = candidateSong.Artists.FirstOrDefault(x => x.IsPrincipalArtist.Value && x.Artist.ArtName.Equals(artName) && x.Artist.IsBand.Value == isBand).Id;
                 }
                 return foundedId;
             }

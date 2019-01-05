@@ -22,14 +22,14 @@ namespace MusicInside.Batch.Importer.Implementations
         {
             _logger = log;
             _options = options.Value;
-            _logger.LogDebug("FlowHelper | Constructor: Attempt to initialize members...");
+            _logger.LogDebug("Constructor|Attempt to initialize members...");
             // Build folder regex from configuration
             _configuredFolderRegex = new Regex(_options.RegexSubFolder);
             // Build extensions regex retrieving allowed extensions
             StringBuilder buildRegexString = new StringBuilder(@"(\.");
             buildRegexString.Append(string.Join(@"$|\.", _options.AvailableExtensions)).Append("$)");
             _allowedExtensionRegex = new Regex(buildRegexString.ToString());
-            _logger.LogDebug("FlowHelper | Constructor: Initialization completed.");
+            _logger.LogDebug("Constructor|Initialization completed.");
         }
 
         public ICollection<string> GetValidSubFolders()

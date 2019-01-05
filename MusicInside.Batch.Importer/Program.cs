@@ -73,7 +73,7 @@ namespace MusicInside.Batch.Importer
                             int songId = dbHelper.CreateSong(fileTag, statisticId, albumId, mediaFileId);
 
                             // Attempt to search for an artist who composed the album of the song
-                            int artistId = dbHelper.ExistArtistForAlbum(albumId, fileTag.FirstAlbumArtist);
+                            int artistId = dbHelper.ExistArtist(fileTag.FirstAlbumArtist);
                             if(artistId == -1)
                             {
                                 // If the linked artist does not exist, create a new one
