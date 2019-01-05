@@ -34,6 +34,8 @@ namespace MusicInside.Batch.Importer
                 #region Object Initialization
                 IDbHelper dbHelper = (DbHelper)servicesProvider.GetService(typeof(IDbHelper));
                 IFlowHelper flowHelper = (FlowHelper)servicesProvider.GetService(typeof(IFlowHelper));
+                int counterFolders = 0;
+                int counterFiles = 0;
                 #endregion
 
                 #region Update Process
@@ -44,6 +46,7 @@ namespace MusicInside.Batch.Importer
                 {
                     ICollection<string> fileNameList = flowHelper.GetValidFileNameInFolder(folder);
                     logger.LogInformation("In folder {0} found {1} files", folder, fileNameList.Count);
+                    var tempCounterFiles = 0;
                     foreach(var file in fileNameList)
                     {
                         logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -102,6 +105,8 @@ namespace MusicInside.Batch.Importer
                             }
                             // Everything is ok. Commit transaction
                             transaction.Commit();
+                            counterFiles++;
+                            tempCounterFiles++;
                         }
                         catch (Exception ex)
                         {
@@ -109,8 +114,12 @@ namespace MusicInside.Batch.Importer
                             transaction.Rollback();
                         }
                     }
+                    logger.LogInformation("--End Folder {0}: Processed {1} files--", folder, tempCounterFiles);
+                    tempCounterFiles = 0;
+                    counterFolders++;
                 }
                 #endregion
+                logger.LogInformation("END ROUTINE - Processed {0} folders and {1} files", counterFolders, counterFiles);
             }
             catch (Exception ex)
             {
