@@ -83,8 +83,9 @@ namespace MusicInside.Batch.Importer
                             // Link the newly created artist as the principal artist of the song
                             dbHelper.LinkArtist(artistId, true, songId);
 
+                            var feats = flowHelper.ExtractFeaturings(file);
                             // For the other artist (featured)
-                            foreach(var featArtist in fileTag.AlbumArtists)
+                            foreach(var featArtist in feats)
                             {
                                 int featArtistId = dbHelper.ExistArtist(featArtist);
                                 if(featArtistId == -1)
@@ -99,7 +100,7 @@ namespace MusicInside.Batch.Importer
                                 int genreId = dbHelper.CreateGenre(genre);
                                 dbHelper.LinkGenre(genreId, songId);
                             }
-
+                            // Everything is ok. Commit transaction
                             transaction.Commit();
                         }
                         catch (Exception ex)

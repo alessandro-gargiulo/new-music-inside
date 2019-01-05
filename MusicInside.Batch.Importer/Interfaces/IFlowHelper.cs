@@ -9,5 +9,7 @@ namespace MusicInside.Batch.Importer.Interfaces
         ICollection<string> GetValidFileNameInFolder(string folder);
 
         TagLib.Tag GetTagFromFileNameInFolder(string folder, string file);
+
+        ICollection<string> ExtractFeaturings(string fileName);
     }
 }

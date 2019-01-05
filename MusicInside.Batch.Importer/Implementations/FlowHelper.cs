@@ -82,5 +82,21 @@ namespace MusicInside.Batch.Importer.Implementations
                 return null;
             }
         }
+
+        public ICollection<string> ExtractFeaturings(string fileName)
+        {
+            _logger.LogInformation("ExtractFeaturings|Attempt to exctract featurings for {0}", fileName);
+            int featIndex = fileName.IndexOf("Feat.") != -1 ? fileName.IndexOf("Feat.") + 6 : -1;
+            if(featIndex != -1)
+            {
+                int delimitatorIndex = fileName.IndexOf("-", featIndex) - 1;
+                // Found a featuring, attempt to retrieve featurings from fileName
+                _logger.LogDebug("InsertFeaturingsUsingFileName|Attempt to split the string [{0}] from {1} to {2}", fileName, featIndex, delimitatorIndex);
+                string[] feats = fileName.Substring(featIndex, delimitatorIndex - featIndex).Split(',');
+                _logger.LogDebug("InsertFeaturingsUsingFileName|Found {0} featurings in fileName=[{1}]", feats.Length, fileName);
+                return feats.ToList();
+            }
+            return new string[] { };
+        }
     }
 }

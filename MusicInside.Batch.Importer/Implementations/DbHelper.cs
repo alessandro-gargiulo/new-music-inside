@@ -145,7 +145,7 @@ namespace MusicInside.Batch.Importer.Implementations
             _context.SaveChanges();
             _logger.LogInformation("CreateAlbum|Album for [{0}] created with id={1}", tag.Album, dbAlbum.Id);
             // Keep cover file
-            if (tag.Pictures[0] != null)
+            if (tag.Pictures != null && tag.Pictures.Length > 0 && tag.Pictures[0] != null)
             {
                 // Insert a blank cover file
                 CoverFile dbCoverFile = new CoverFile
@@ -176,7 +176,7 @@ namespace MusicInside.Batch.Importer.Implementations
                         _logger.LogInformation("CreateAlbum|Created new file on file system under directory {0}\\{1} using name {2}.png", _options.RootDirectory, _options.CoverSubFolder, newCoverFileName);
                         dbCoverFile.FileName = newCoverFileName;
                         dbCoverFile.Extension = "png";
-                        dbCoverFile.Path = Path.Combine(_options.CoverSubFolder, newCoverFileName);
+                        dbCoverFile.Path = Path.Combine(_options.CoverSubFolder, $"{newCoverFileName}.png");
                         _context.Covers.Update(dbCoverFile);
                         _context.SaveChanges();
                         _logger.LogInformation("CreateAlbum|Field 'FileName' of fileId={0} was correctly updated using value={1}", dbCoverFile.Id, newCoverFileName);
@@ -264,14 +264,18 @@ namespace MusicInside.Batch.Importer.Implementations
 
         public int CreateGenre(string genre)
         {
-            _logger.LogInformation("CreateGenre|Attempt to create a genre for {0}", genre);
-            Genre dbGenre = new Genre
+            _logger.LogInformation("CreateGenre|Attempt to create/retrieve a genre for {0}", genre);
+            Genre dbGenre = _context.Genres.FirstOrDefault(x => x.Description.Equals(genre));
+            if(genre == null)
             {
-                Description = genre
+                dbGenre = new Genre
+                {
+                    Description = genre
+                };
+                _context.Genres.Add(dbGenre);
+                _context.SaveChanges();
+                _logger.LogInformation("CreateGenre|Genre for [{0}] created with id={1}", genre, dbGenre.Id);
             };
-            _context.Genres.Add(dbGenre);
-            _context.SaveChanges();
-            _logger.LogInformation("CreateGenre|Genre for [{0}] created with id={1}", genre, dbGenre.Id);
             return dbGenre.Id;
         }
         #endregion
@@ -280,7 +284,7 @@ namespace MusicInside.Batch.Importer.Implementations
         public void LinkArtist(int artistId, bool isPrincipalArtist, int songId)
         {
             _logger.LogInformation("LinkArtist|Attempt to link artist with id={0} to song with id={1} [isPrincipal={2}]", artistId, songId, isPrincipalArtist);
-            Song song = _context.Songs.FirstOrDefault(x => x.Id == songId);
+            Song song = _context.Songs.Include(a => a.Artists).FirstOrDefault(x => x.Id == songId);
             if (song == null) throw new InexistentSongException(songId);
             song.Artists.Add(new SongArtist
             {
@@ -296,9 +300,16 @@ namespace MusicInside.Batch.Importer.Implementations
         public void LinkGenre(int genreId, int songId)
         {
             _logger.LogInformation("LinkGenre|Attempt to link genre with id={0} to song with id={1}", genreId, songId);
-
+            Song song = _context.Songs.Include(a => a.Genres).FirstOrDefault(x => x.Id == songId);
+            if (song == null) throw new InexistentSongException(songId);
+            song.Genres.Add(new SongGenre
+            {
+                SongId = songId,
+                GenreId = genreId
+            });
+            _context.Songs.Update(song);
+            _context.SaveChanges();
             _logger.LogInformation("LinkGenre|Genre with id={0} correctly linked to song with id={1}", genreId, songId);
-
         }
         #endregion
     }
