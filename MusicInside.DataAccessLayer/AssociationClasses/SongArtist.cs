@@ -6,7 +6,7 @@ namespace MusicInside.DataAccessLayer.AssociationClasses
     {
         #region Properties
         public int Id { get; set; }
-        public bool IsPrincipalArtist { get; set; }
+        public bool? IsPrincipalArtist { get; set; }
         #endregion
 
         #region Navigation Properties

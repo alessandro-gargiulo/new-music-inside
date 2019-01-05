@@ -17,8 +17,9 @@ namespace MusicInside.DataAccessLayer.Migrations
                     ArtName = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
-                    BirthYear = table.Column<int>(nullable: false),
-                    IsBand = table.Column<bool>(nullable: false)
+                    BirthYear = table.Column<int>(nullable: true),
+                    IsBand = table.Column<bool>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,9 +32,9 @@ namespace MusicInside.DataAccessLayer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Path = table.Column<string>(nullable: false),
-                    FileName = table.Column<string>(nullable: false),
-                    Extension = table.Column<string>(nullable: false)
+                    Path = table.Column<string>(nullable: true),
+                    FileName = table.Column<string>(nullable: true),
+                    Extension = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,7 +47,7 @@ namespace MusicInside.DataAccessLayer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,9 +60,9 @@ namespace MusicInside.DataAccessLayer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Path = table.Column<string>(nullable: false),
-                    FileName = table.Column<string>(nullable: false),
-                    Extension = table.Column<string>(nullable: false)
+                    Path = table.Column<string>(nullable: true),
+                    FileName = table.Column<string>(nullable: true),
+                    Extension = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,11 +75,31 @@ namespace MusicInside.DataAccessLayer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Moment", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Slide",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Source = table.Column<string>(nullable: true),
+                    ValidityFrom = table.Column<DateTime>(nullable: true),
+                    ValidityTo = table.Column<DateTime>(nullable: true),
+                    Section = table.Column<string>(nullable: true),
+                    Header = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    AltText = table.Column<string>(nullable: true),
+                    Order = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Slide", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,8 +108,8 @@ namespace MusicInside.DataAccessLayer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    NumPlay = table.Column<int>(nullable: false),
-                    LastPlay = table.Column<DateTime>(nullable: false)
+                    NumPlay = table.Column<int>(nullable: false, defaultValue: 0),
+                    LastPlay = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,7 +123,8 @@ namespace MusicInside.DataAccessLayer.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: false),
-                    CoverId = table.Column<int>(nullable: false)
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    CoverId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -112,7 +134,7 @@ namespace MusicInside.DataAccessLayer.Migrations
                         column: x => x.CoverId,
                         principalTable: "CoverFile",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,10 +145,11 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: false),
                     TrackNo = table.Column<int>(nullable: false, defaultValue: 1),
-                    Year = table.Column<int>(nullable: false),
-                    StatisticId = table.Column<int>(nullable: false),
+                    Year = table.Column<int>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    StatisticId = table.Column<int>(nullable: true),
                     AlbumId = table.Column<int>(nullable: false),
-                    MediaId = table.Column<int>(nullable: false)
+                    MediaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,27 +165,28 @@ namespace MusicInside.DataAccessLayer.Migrations
                         column: x => x.MediaId,
                         principalTable: "MediaFile",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Song_Statistic_StatisticId",
                         column: x => x.StatisticId,
                         principalTable: "Statistic",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SongArtist",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsPrincipalArtist = table.Column<bool>(nullable: true),
                     SongId = table.Column<int>(nullable: false),
-                    ArtistId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false),
-                    IsPrincipalArtist = table.Column<bool>(nullable: false)
+                    ArtistId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SongArtist", x => new { x.SongId, x.ArtistId });
+                    table.PrimaryKey("PK_SongArtist", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SongArtist_Artist_ArtistId",
                         column: x => x.ArtistId,
@@ -181,12 +205,14 @@ namespace MusicInside.DataAccessLayer.Migrations
                 name: "SongGenre",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SongId = table.Column<int>(nullable: false),
                     GenreId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SongGenre", x => new { x.SongId, x.GenreId });
+                    table.PrimaryKey("PK_SongGenre", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SongGenre_Genre_GenreId",
                         column: x => x.GenreId,
@@ -205,12 +231,14 @@ namespace MusicInside.DataAccessLayer.Migrations
                 name: "SongMoment",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     MomentId = table.Column<int>(nullable: false),
                     SongId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SongMoment", x => new { x.SongId, x.MomentId });
+                    table.PrimaryKey("PK_SongMoment", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SongMoment_Moment_MomentId",
                         column: x => x.MomentId,
@@ -229,7 +257,8 @@ namespace MusicInside.DataAccessLayer.Migrations
                 name: "IX_Album_CoverId",
                 table: "Album",
                 column: "CoverId",
-                unique: true);
+                unique: true,
+                filter: "[CoverId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Song_AlbumId",
@@ -240,13 +269,15 @@ namespace MusicInside.DataAccessLayer.Migrations
                 name: "IX_Song_MediaId",
                 table: "Song",
                 column: "MediaId",
-                unique: true);
+                unique: true,
+                filter: "[MediaId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Song_StatisticId",
                 table: "Song",
                 column: "StatisticId",
-                unique: true);
+                unique: true,
+                filter: "[StatisticId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SongArtist_ArtistId",
@@ -254,18 +285,36 @@ namespace MusicInside.DataAccessLayer.Migrations
                 column: "ArtistId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SongArtist_SongId",
+                table: "SongArtist",
+                column: "SongId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SongGenre_GenreId",
                 table: "SongGenre",
                 column: "GenreId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SongGenre_SongId",
+                table: "SongGenre",
+                column: "SongId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SongMoment_MomentId",
                 table: "SongMoment",
                 column: "MomentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SongMoment_SongId",
+                table: "SongMoment",
+                column: "SongId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Slide");
+
             migrationBuilder.DropTable(
                 name: "SongArtist");
 

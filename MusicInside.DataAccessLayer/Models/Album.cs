@@ -15,7 +15,7 @@ namespace MusicInside.DataAccessLayer.Models
         public IList<Song> Songs { get; set; }
 
         public CoverFile Cover { get; set; }
-        public int CoverId { get; set; }
+        public int? CoverId { get; set; }
         #endregion
     }
 }

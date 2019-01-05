@@ -11,8 +11,8 @@ namespace MusicInside.DataAccessLayer.Models
         public string ArtName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public int BirthYear { get; set; }
-        public bool IsBand { get; set; }
+        public int? BirthYear { get; set; }
+        public bool? IsBand { get; set; }
         public DateTime CreatedOn { get; set; }
         #endregion
 

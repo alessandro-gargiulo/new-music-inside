@@ -21,43 +21,59 @@ namespace MusicInside.DataAccessLayer.Migrations
 
             modelBuilder.Entity("MusicInside.DataAccessLayer.AssociationClasses.SongArtist", b =>
                 {
-                    b.Property<int>("SongId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ArtistId");
 
-                    b.Property<int>("Id");
+                    b.Property<bool?>("IsPrincipalArtist");
 
-                    b.Property<bool>("IsPrincipalArtist");
+                    b.Property<int>("SongId");
 
-                    b.HasKey("SongId", "ArtistId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ArtistId");
+
+                    b.HasIndex("SongId");
 
                     b.ToTable("SongArtist");
                 });
 
             modelBuilder.Entity("MusicInside.DataAccessLayer.AssociationClasses.SongGenre", b =>
                 {
-                    b.Property<int>("SongId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("GenreId");
 
-                    b.HasKey("SongId", "GenreId");
+                    b.Property<int>("SongId");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("GenreId");
+
+                    b.HasIndex("SongId");
 
                     b.ToTable("SongGenre");
                 });
 
             modelBuilder.Entity("MusicInside.DataAccessLayer.AssociationClasses.SongMoment", b =>
                 {
-                    b.Property<int>("SongId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("MomentId");
 
-                    b.HasKey("SongId", "MomentId");
+                    b.Property<int>("SongId");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("MomentId");
+
+                    b.HasIndex("SongId");
 
                     b.ToTable("SongMoment");
                 });
@@ -68,7 +84,7 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CoverId");
+                    b.Property<int?>("CoverId");
 
                     b.Property<DateTime>("CreatedOn");
 
@@ -78,7 +94,8 @@ namespace MusicInside.DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CoverId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CoverId] IS NOT NULL");
 
                     b.ToTable("Album");
                 });
@@ -91,11 +108,11 @@ namespace MusicInside.DataAccessLayer.Migrations
 
                     b.Property<string>("ArtName");
 
-                    b.Property<int>("BirthYear");
+                    b.Property<int?>("BirthYear");
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<bool>("IsBand");
+                    b.Property<bool?>("IsBand");
 
                     b.Property<string>("Name");
 
@@ -112,14 +129,11 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Extension")
-                        .IsRequired();
+                    b.Property<string>("Extension");
 
-                    b.Property<string>("FileName")
-                        .IsRequired();
+                    b.Property<string>("FileName");
 
-                    b.Property<string>("Path")
-                        .IsRequired();
+                    b.Property<string>("Path");
 
                     b.HasKey("Id");
 
@@ -132,7 +146,8 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -145,14 +160,11 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Extension")
-                        .IsRequired();
+                    b.Property<string>("Extension");
 
-                    b.Property<string>("FileName")
-                        .IsRequired();
+                    b.Property<string>("FileName");
 
-                    b.Property<string>("Path")
-                        .IsRequired();
+                    b.Property<string>("Path");
 
                     b.HasKey("Id");
 
@@ -165,7 +177,8 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -182,7 +195,7 @@ namespace MusicInside.DataAccessLayer.Migrations
 
                     b.Property<string>("Header");
 
-                    b.Property<int>("Order");
+                    b.Property<int?>("Order");
 
                     b.Property<string>("Section");
 
@@ -190,9 +203,9 @@ namespace MusicInside.DataAccessLayer.Migrations
 
                     b.Property<string>("Text");
 
-                    b.Property<DateTime>("ValidityFrom");
+                    b.Property<DateTime?>("ValidityFrom");
 
-                    b.Property<DateTime>("ValidityTo");
+                    b.Property<DateTime?>("ValidityTo");
 
                     b.HasKey("Id");
 
@@ -205,13 +218,14 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AlbumId");
+                    b.Property<int?>("AlbumId")
+                        .IsRequired();
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<int>("MediaId");
+                    b.Property<int?>("MediaId");
 
-                    b.Property<int>("StatisticId");
+                    b.Property<int?>("StatisticId");
 
                     b.Property<string>("Title")
                         .IsRequired();
@@ -220,17 +234,19 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(1);
 
-                    b.Property<int>("Year");
+                    b.Property<int?>("Year");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AlbumId");
 
                     b.HasIndex("MediaId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[MediaId] IS NOT NULL");
 
                     b.HasIndex("StatisticId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[StatisticId] IS NOT NULL");
 
                     b.ToTable("Song");
                 });
@@ -241,9 +257,11 @@ namespace MusicInside.DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("LastPlay");
+                    b.Property<DateTime?>("LastPlay");
 
-                    b.Property<int>("NumPlay");
+                    b.Property<int>("NumPlay")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
@@ -293,8 +311,7 @@ namespace MusicInside.DataAccessLayer.Migrations
                 {
                     b.HasOne("MusicInside.DataAccessLayer.Models.CoverFile", "Cover")
                         .WithOne("Album")
-                        .HasForeignKey("MusicInside.DataAccessLayer.Models.Album", "CoverId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MusicInside.DataAccessLayer.Models.Album", "CoverId");
                 });
 
             modelBuilder.Entity("MusicInside.DataAccessLayer.Models.Song", b =>
@@ -306,13 +323,11 @@ namespace MusicInside.DataAccessLayer.Migrations
 
                     b.HasOne("MusicInside.DataAccessLayer.Models.MediaFile", "Media")
                         .WithOne("Song")
-                        .HasForeignKey("MusicInside.DataAccessLayer.Models.Song", "MediaId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MusicInside.DataAccessLayer.Models.Song", "MediaId");
 
                     b.HasOne("MusicInside.DataAccessLayer.Models.Statistic", "Statistic")
                         .WithOne("Song")
-                        .HasForeignKey("MusicInside.DataAccessLayer.Models.Song", "StatisticId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MusicInside.DataAccessLayer.Models.Song", "StatisticId");
                 });
 #pragma warning restore 612, 618
         }

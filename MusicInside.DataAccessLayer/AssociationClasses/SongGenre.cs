@@ -4,6 +4,10 @@ namespace MusicInside.DataAccessLayer.AssociationClasses
 {
     public class SongGenre
     {
+        #region Properties
+        public int Id { get; set; }
+        #endregion
+
         #region Navigation Properties
         public Song Song { get; set; }
         public int SongId { get; set; }

@@ -13,29 +13,24 @@ namespace MusicInside.DataAccessLayer.Context
             builder.ToTable("Song");
 
             #region Property Configurations
-            builder.Property(p => p.Title)
-                .IsRequired();
+            builder.Property(p => p.Title).IsRequired();
 
             builder.Property(p => p.TrackNo)
                 .IsRequired()
                 .HasDefaultValue(1);
+
+            builder.Property(p => p.Year).IsRequired(false);
+
             #endregion
 
             #region One-To-One Navigation Configurations
             builder.HasOne(p => p.Statistic)
                 .WithOne(p => p.Song)
-                .HasForeignKey<Song>(p => p.StatisticId)
-                .IsRequired();
+                .HasForeignKey<Song>(p => p.StatisticId);
 
             builder.HasOne(p => p.Media)
                 .WithOne(p => p.Song)
-                .HasForeignKey<Song>(p => p.MediaId)
-                .IsRequired();
-
-            builder.HasOne(p => p.Media)
-                .WithOne(p => p.Song)
-                .HasForeignKey<Song>(p => p.MediaId)
-                .IsRequired();
+                .HasForeignKey<Song>(p => p.MediaId);
             #endregion
 
             #region One-To-Many Navigation Configurations
@@ -54,22 +49,14 @@ namespace MusicInside.DataAccessLayer.Context
             builder.ToTable("Album");
 
             #region Property Configurations
-            builder.Property(p => p.Title)
-                .IsRequired();
+            builder.Property(p => p.Title).IsRequired();
+            builder.Property(p => p.CoverId).IsRequired(false);
             #endregion
 
             #region One-To-One Navigation Configurations
             builder.HasOne(p => p.Cover)
                 .WithOne(p => p.Album)
-                .HasForeignKey<Album>(p => p.CoverId)
-                .IsRequired();
-            #endregion
-
-            #region One-To-Many Navigation Configurations
-            builder.HasOne(p => p.Cover)
-                .WithOne(p => p.Album)
-                .HasForeignKey<Album>(p => p.CoverId)
-                .IsRequired();
+                .HasForeignKey<Album>(p => p.CoverId);
             #endregion
         }
     }
@@ -81,9 +68,9 @@ namespace MusicInside.DataAccessLayer.Context
             builder.ToTable("CoverFile");
 
             #region Property Configurations
-            builder.Property(p => p.Path).IsRequired();
-            builder.Property(p => p.FileName).IsRequired();
-            builder.Property(p => p.Extension).IsRequired();
+            builder.Property(p => p.Path).IsRequired(false);
+            builder.Property(p => p.FileName).IsRequired(false);
+            builder.Property(p => p.Extension).IsRequired(false);
             #endregion
         }
     }
@@ -95,9 +82,9 @@ namespace MusicInside.DataAccessLayer.Context
             builder.ToTable("MediaFile");
 
             #region Property Configurations
-            builder.Property(p => p.Path).IsRequired();
-            builder.Property(p => p.FileName).IsRequired();
-            builder.Property(p => p.Extension).IsRequired();
+            builder.Property(p => p.Path).IsRequired(false);
+            builder.Property(p => p.FileName).IsRequired(false);
+            builder.Property(p => p.Extension).IsRequired(false);
             #endregion
         }
     }
@@ -107,6 +94,13 @@ namespace MusicInside.DataAccessLayer.Context
         public void Configure(EntityTypeBuilder<Artist> builder)
         {
             builder.ToTable("Artist");
+
+            #region Property Configurations
+            builder.Property(p => p.Name).IsRequired(false);
+            builder.Property(p => p.Surname).IsRequired(false);
+            builder.Property(p => p.BirthYear).IsRequired(false);
+            builder.Property(p => p.IsBand).IsRequired(false);
+            #endregion
         }
     }
 
@@ -115,6 +109,10 @@ namespace MusicInside.DataAccessLayer.Context
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
             builder.ToTable("Genre");
+
+            #region Property Configurations
+            builder.Property(p => p.Description).IsRequired();
+            #endregion
         }
     }
 
@@ -123,6 +121,10 @@ namespace MusicInside.DataAccessLayer.Context
         public void Configure(EntityTypeBuilder<Moment> builder)
         {
             builder.ToTable("Moment");
+
+            #region Property Configurations
+            builder.Property(p => p.Description).IsRequired();
+            #endregion
         }
     }
 
@@ -131,6 +133,11 @@ namespace MusicInside.DataAccessLayer.Context
         public void Configure(EntityTypeBuilder<Statistic> builder)
         {
             builder.ToTable("Statistic");
+
+            #region Property Configurations
+            builder.Property(p => p.NumPlay).IsRequired().HasDefaultValue(0);
+            builder.Property(p => p.LastPlay).IsRequired(false);
+            #endregion
         }
     }
 
@@ -139,6 +146,17 @@ namespace MusicInside.DataAccessLayer.Context
         public void Configure(EntityTypeBuilder<Slide> builder)
         {
             builder.ToTable("Slide");
+
+            #region Property Configurations
+            builder.Property(p => p.Source).IsRequired(false);
+            builder.Property(p => p.ValidityFrom).IsRequired(false);
+            builder.Property(p => p.ValidityTo).IsRequired(false);
+            builder.Property(p => p.Section).IsRequired(false);
+            builder.Property(p => p.Header).IsRequired(false);
+            builder.Property(p => p.Text).IsRequired(false);
+            builder.Property(p => p.AltText).IsRequired(false);
+            builder.Property(p => p.Order).IsRequired(false);
+            #endregion
         }
     }
     #endregion
@@ -151,7 +169,7 @@ namespace MusicInside.DataAccessLayer.Context
             builder.ToTable("SongGenre");
 
             #region Property Configurations
-            builder.HasKey(k => new { k.SongId, k.GenreId });
+            builder.HasKey(k => k.Id);
             #endregion
 
             #region One-To-Many Navigation Configurations
@@ -175,8 +193,8 @@ namespace MusicInside.DataAccessLayer.Context
             builder.ToTable("SongArtist");
 
             #region Property Configurations
-            builder.HasKey(k => new { k.SongId, k.ArtistId });
-            builder.Property(p => p.IsPrincipalArtist).IsRequired();
+            builder.HasKey(k => k.Id);
+            builder.Property(p => p.IsPrincipalArtist).IsRequired(false);
             #endregion
 
             #region One-To-Many Navigation Configurations
@@ -200,7 +218,7 @@ namespace MusicInside.DataAccessLayer.Context
             builder.ToTable("SongMoment");
 
             #region Property Configurations
-            builder.HasKey(k => new { k.SongId, k.MomentId });
+            builder.HasKey(k => k.Id);
             #endregion
 
             #region One-To-Many Navigation Configurations

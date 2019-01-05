@@ -7,7 +7,7 @@ namespace MusicInside.DataAccessLayer.Models
         #region Properties
         public int Id { get; set; }
         public int NumPlay { get; set; }
-        public DateTime LastPlay { get; set; }
+        public DateTime? LastPlay { get; set; }
         #endregion
 
         #region Navigation Properties
