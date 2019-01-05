@@ -13,7 +13,7 @@ namespace MusicInside.Batch.Importer.Interfaces
 
         int CreateAlbum(Tag tag);
         int CreateEmptyStatistic();
-        int CreateMediaFile(Tag tag, int albumId);
+        int CreateMediaFile(string folder, string file);
 
         int CreateSong(Tag tag, int statisticId, int albumId, int mediaFileId);
 

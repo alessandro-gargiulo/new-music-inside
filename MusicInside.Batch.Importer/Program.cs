@@ -65,7 +65,7 @@ namespace MusicInside.Batch.Importer
                             // Create an empty statistic entry
                             int statisticId = dbHelper.CreateEmptyStatistic();
                             // Create the media file entry
-                            int mediaFileId = dbHelper.CreateMediaFile(fileTag, albumId);
+                            int mediaFileId = dbHelper.CreateMediaFile(folder, file);
 
                             // Create the song entry
                             int songId = dbHelper.CreateSong(fileTag, statisticId, albumId, mediaFileId);

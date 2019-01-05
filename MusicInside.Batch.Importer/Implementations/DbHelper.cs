@@ -141,8 +141,9 @@ namespace MusicInside.Batch.Importer.Implementations
             };
             _context.Albums.Add(dbAlbum);
             _context.SaveChanges();
+            _logger.LogInformation("CreateAlbum | Album for [{0}] created with id={1}", tag.Album, dbAlbum.Id);
             // Keep cover file
-            if(tag.Pictures[0] != null)
+            if (tag.Pictures[0] != null)
             {
                 // Insert a blank cover file
                 CoverFile dbCoverFile = new CoverFile
@@ -154,6 +155,7 @@ namespace MusicInside.Batch.Importer.Implementations
                 };
                 _context.Covers.Add(dbCoverFile);
                 _context.SaveChanges();
+                _logger.LogInformation("CreateAlbum | Cover for [{0}] created with id={1}", tag.Album, dbCoverFile.Id);
                 try
                 {
                     string newCoverFileName = $"{dbCoverFile.Id}_{dbAlbum.Id}";
@@ -196,27 +198,79 @@ namespace MusicInside.Batch.Importer.Implementations
 
         public int CreateEmptyStatistic()
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation("CreateEmptyStatistic | Attempt to create an empty statistic");
+            Statistic dbStatistic = new Statistic
+            {
+                NumPlay = 0
+            };
+            _context.Statistics.Add(dbStatistic);
+            _context.SaveChanges();
+            _logger.LogInformation("CreateEmptyStatistic | Statistic created with id={0}", dbStatistic.Id);
+            return dbStatistic.Id;
         }
 
-        public int CreateMediaFile(Tag tag, int albumId)
+        public int CreateMediaFile(string folder, string file)
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation("CreateMediaFile | Attempt to create a media file for {0}", Path.Combine(folder, file));
+            // Retrieving extension without dot
+            int dotPos = file.LastIndexOf(".") + 1;
+            string extension = file.Substring(dotPos, file.Length - dotPos);
+            MediaFile dbMediaFile = new MediaFile
+            {
+                Path = folder,
+                FileName = Path.GetFileNameWithoutExtension(file),
+                Extension = extension
+            };
+            _context.Medias.Add(dbMediaFile);
+            _context.SaveChanges();
+            _logger.LogInformation("CreateMediaFile | Media file for [{0}] created with id={1}", Path.Combine(folder, file), dbMediaFile.Id);
+            return dbMediaFile.Id;
         }
 
         public int CreateSong(Tag tag, int statisticId, int albumId, int mediaFileId)
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation("CreateAlbum | Attempt to create a song for tag [title={0}][albumId={1}][statId={2}][mediaId={3}]", tag.Title, albumId, statisticId, mediaFileId);
+            Song dbSong = new Song
+            {
+                AlbumId = albumId,
+                MediaId = mediaFileId,
+                StatisticId = statisticId,
+                Title = tag.Title,
+                TrackNo = (int)tag.Track,
+                Year = (int)tag.Year,
+                CreatedOn = DateTime.Now
+            };
+            _context.Songs.Add(dbSong);
+            _context.SaveChanges();
+            _logger.LogInformation("CreateMediaFile | Song for [{0}] created with id={1}", tag.Title, dbSong.Id);
+            return dbSong.Id;
         }
 
         public int CreateArtist(string artName)
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation("CreateArtist | Attempt to create an artist for {0}", artName);
+            Artist dbArtist = new Artist
+            {
+                ArtName = artName,
+                CreatedOn = DateTime.Now
+            };
+            _context.Artists.Add(dbArtist);
+            _context.SaveChanges();
+            _logger.LogInformation("CreateArtist | Artist for [{0}] created with id={1}", artName, dbArtist.Id);
+            return dbArtist.Id;
         }
 
         public int CreateGenre(string genre)
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation("CreateGenre | Attempt to create a genre for {0}", genre);
+            Genre dbGenre = new Genre
+            {
+                Description = genre
+            };
+            _context.Genres.Add(dbGenre);
+            _context.SaveChanges();
+            _logger.LogInformation("CreateGenre | Genre for [{0}] created with id={1}", genre, dbGenre.Id);
+            return dbGenre.Id;
         }
         #endregion
 
