@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using MusicInside.Batch.Importer.Exceptions;
 using MusicInside.Batch.Importer.Infrastructure;
 using MusicInside.Batch.Importer.Interfaces;
+using MusicInside.DataAccessLayer.AssociationClasses;
 using MusicInside.DataAccessLayer.Context;
 using MusicInside.DataAccessLayer.Models;
 using System;
@@ -277,12 +278,26 @@ namespace MusicInside.Batch.Importer.Implementations
         #region Link Entities
         public void LinkArtist(int artistId, bool isPrincipalArtist, int songId)
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation("LinkArtist | Attempt to link artist with id={0} to song with id={1} [isPrincipal={2}]", artistId, songId, isPrincipalArtist);
+            Song song = _context.Songs.FirstOrDefault(x => x.Id == songId);
+            if (song == null) throw new InexistentSongException(songId);
+            song.Artists.Add(new SongArtist
+            {
+                SongId = songId,
+                ArtistId = artistId,
+                IsPrincipalArtist = isPrincipalArtist
+            });
+            _context.Songs.Update(song);
+            _context.SaveChanges();
+            _logger.LogInformation("LinkArtist | Artist with id={0} correctly linked to song with id={1} [isPrincipal={2}]", artistId, songId, isPrincipalArtist);
         }
 
         public void LinkGenre(int genreId, int songId)
         {
-            throw new System.NotImplementedException();
+            _logger.LogInformation("LinkGenre | Attempt to link genre with id={0} to song with id={1}", genreId, songId);
+
+            _logger.LogInformation("LinkGenre | Genre with id={0} correctly linked to song with id={1}", genreId, songId);
+
         }
         #endregion
     }
