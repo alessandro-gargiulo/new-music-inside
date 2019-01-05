@@ -25,7 +25,7 @@ namespace MusicInside.Batch.Importer
             logger.LogInformation("--------MusicInside WebApp database      --------");
             logger.LogInformation("--------Author: Alessandro Gargiulo      --------");
             logger.LogInformation("-------------------------------------------------");
-            logger.LogInformation("--------Execution Time: {0} -----------", DateTime.Now.ToShortDateString());
+            logger.LogInformation("----------Execution Date:{0} -------------", DateTime.Now.ToShortDateString());
             logger.LogInformation("-------------------------------------------------");
             #endregion
 
@@ -46,15 +46,17 @@ namespace MusicInside.Batch.Importer
                     logger.LogInformation("In folder {0} found {1} files", folder, fileNameList.Count);
                     foreach(var file in fileNameList)
                     {
-                        logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++");
+                        logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                         logger.LogInformation("++ Attempt to process file {0} ++", file);
-                        logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++");
-                        Tag fileTag = flowHelper.GetTagFromFileNameInFolder(folder, file);
+                        logger.LogInformation("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
                         // Begin transaction
                         IDbContextTransaction transaction = dbHelper.BeginTransaction();
                         try
                         {
+                            // Retrieve Tag
+                            Tag fileTag = flowHelper.GetTagFromFileNameInFolder(folder, file);
+
                             // Attempt to search for an album with the same name and linked to the same artist
                             int albumId = dbHelper.ExistAlbum(fileTag.Album, fileTag.FirstAlbumArtist);
                             if(albumId == -1)
@@ -112,7 +114,6 @@ namespace MusicInside.Batch.Importer
             catch (Exception ex)
             {
                 logger.LogCritical("Unable to terminate process due to exception: {0} [StackTrace: {1}]", ex.Message, ex.ToString());
-                throw;
             }
         }
     }
