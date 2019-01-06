@@ -25,14 +25,15 @@ namespace MusicInside.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] int limit = int.MaxValue, [FromQuery] int page = 1)
+        public IActionResult Get([FromQuery] int limit = int.MaxValue, [FromQuery] int page = 1, [FromQuery] string title = "")
         {
             if(limit > 0 && page > 0)
             {
-                // Ask for numbero of total songs
-                int count = _context.Songs.Count();
+                // Ask for number of total songs
+                int count = _context.Songs.Where(x => string.IsNullOrEmpty(title) || x.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) > 0).Count();
                 // Retrieve page of songs
                 IEnumerable<Song> songs = _context.Songs
+                    .Where(x => string.IsNullOrEmpty(title) || x.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) > 0)
                     .OrderBy(s => s.Id)
                     .Skip((page - 1) * limit)
                     .Take(limit)
@@ -60,6 +61,7 @@ namespace MusicInside.Controllers
                     parsedSongs.Add(ste);
                 }
 
+                // Return Json Result
                 return Json(new PagedSongTileEntity
                 {
                     OverallCount = count,

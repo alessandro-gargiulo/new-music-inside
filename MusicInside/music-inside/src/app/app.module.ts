@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule, MatSnackBar, MatSnackBarContainer } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from "@angular/cdk/overlay";
 import { NgbCarouselModule } from "@ng-bootstrap/ng-bootstrap"
@@ -17,8 +18,9 @@ import { AlbumListComponent } from 'src/app/components/album-list/album-list.com
 import { ArtistListComponent } from 'src/app/components/artist-list/artist-list.component';
 import { AboutMeComponent } from 'src/app/components/about-me/about-me.component';
 import { SongListService } from 'src/app/services/song-list.service';
-import { MatPaginatorModule } from '@angular/material';
+import { MatPaginatorModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,8 +42,12 @@ import { HttpClientModule } from '@angular/common/http';
     MatGridListModule,
     MatSnackBarModule,
     MatPaginatorModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule,
     NgbCarouselModule,
-    OverlayModule
+    OverlayModule,
+    FormsModule
   ],
   providers: [
     SongListService,

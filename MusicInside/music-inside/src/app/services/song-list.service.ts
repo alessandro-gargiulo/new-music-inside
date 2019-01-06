@@ -11,11 +11,12 @@ export class SongListService {
 
   constructor(private _http: HttpClient) { }
 
-  get(page?: number, size?: number): Observable<PagedSongTile> {
+  get(page?: number, size?: number, title?: string): Observable<PagedSongTile> {
+    let srchTtl = title ? title : '';
     if (page && size) {
-      return this._http.get<PagedSongTile>(`${environment.api.api_base_path}/${environment.api.songList.base}?${environment.api.songList.paramSize}=${size}&${environment.api.songList.paramPage}=${page}`);
+      return this._http.get<PagedSongTile>(`${environment.api.api_base_path}/${environment.api.songList.base}?${environment.api.songList.paramTitle}=${srchTtl}&${environment.api.songList.paramSize}=${size}&${environment.api.songList.paramPage}=${page}`);
     } else {
-      return this._http.get<PagedSongTile>(`${environment.api.api_base_path}/${environment.api.songList.base}`);
+      return this._http.get<PagedSongTile>(`${environment.api.api_base_path}/${environment.api.songList.base}?${environment.api.songList.paramTitle}=${srchTtl}`);
     }
   }
 }

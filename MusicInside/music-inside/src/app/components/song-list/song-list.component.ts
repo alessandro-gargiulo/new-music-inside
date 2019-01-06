@@ -18,6 +18,8 @@ export class SongListComponent implements OnInit, OnDestroy {
   public pageSizeOptions: number[] = [5, 10, 25, 100];
   public pageSize: number = 10;
 
+  public searchParameter: string = '';
+
   private _songs$: Subscription;
 
   constructor
@@ -26,43 +28,7 @@ export class SongListComponent implements OnInit, OnDestroy {
     private _sngLstSrv: SongListService,
     private _snackBar: MatSnackBar
   ) {
-    //this.songs = new Array<SongTile>();
-    //this.songs.push({
-    //  id: 0,
-    //  title: 'Behind those eyes',
-    //  artist: '3 Doors Down',
-    //  album: 'Titolo Album',
-    //  genre: 'Pop',
-    //  coverUrl: 'http://localhost:80//2_1.png',
-    //  fileUrl: 'http://localhost:80//A.mp3',
-    //  fileType: 'audio/mpeg',
-    //  statCount: 4,
-    //  statWhen: '25 Dec 2018'
-    //});
-    //this.songs.push({
-    //  id: 1,
-    //  title: 'Be Like That',
-    //  artist: '3 Doors Down',
-    //  album: 'Titolo Album',
-    //  genre: 'Pop',
-    //  coverUrl: 'http://localhost:80//4_2.png',
-    //  fileUrl: 'http://localhost:80//B.mp3',
-    //  fileType: 'audio/mpeg',
-    //  statCount: 4,
-    //  statWhen: '25 Dec 2018'
-    //});
-    //this.songs.push({
-    //  id: 2,
-    //  title: 'Around The World',
-    //  artist: 'Daft Punk',
-    //  album: 'Titolo Album',
-    //  genre: 'Pop',
-    //  coverUrl: 'http://localhost:80//6_3.png',
-    //  fileUrl: 'http://localhost:80//C.mp3',
-    //  fileType: 'audio/mpeg',
-    //  statCount: 4,
-    //  statWhen: '25 Dec 2018'
-    //});
+
   }
 
   ngOnInit() {
@@ -84,17 +50,21 @@ export class SongListComponent implements OnInit, OnDestroy {
     this._snackBar.open(`${this.songs[index].title} added to playlist.`, 'Dismiss', { duration: 5000 });
   }
 
-  public getCssBackgroundRuleUrl(url: string): string {
-    return `url(${url})`;
+  //public getCssBackgroundRuleUrl(url: string): string {
+  //  return `url(${url})`;
+  //}
+
+  public search(): void {
+    this.getSongs(1, this.pageSize, this.searchParameter);
   }
 
   public onPageEvent(e: PageEvent) {
     this.pageSize = e.pageSize;
-    this.getSongs(e.pageIndex + 1, e.pageSize);
+    this.getSongs(e.pageIndex + 1, e.pageSize, this.searchParameter);
   }
 
-  private getSongs(page: number, size: number): void {
-    this._songs$ = this._sngLstSrv.get(page, size).subscribe(res => {
+  private getSongs(page: number, size: number, title?: string): void {
+    this._songs$ = this._sngLstSrv.get(page, size, title).subscribe(res => {
       this.songs = res.songs;
       this.length = res.overallCount;
     });

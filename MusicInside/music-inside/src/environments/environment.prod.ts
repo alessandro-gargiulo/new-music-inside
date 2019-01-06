@@ -8,7 +8,8 @@ export const environment = {
     songList: {
       base: 'song-list',
       paramSize: 'limit',
-      paramPage: 'page'
+      paramPage: 'page',
+      paramTitle: 'title'
     },
     artist: {
       base: 'artists'
