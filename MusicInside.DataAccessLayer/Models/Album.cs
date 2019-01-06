@@ -12,9 +12,9 @@ namespace MusicInside.DataAccessLayer.Models
         #endregion
 
         #region Navigation Properties
-        public IList<Song> Songs { get; set; }
+        public virtual IList<Song> Songs { get; set; }
 
-        public CoverFile Cover { get; set; }
+        public virtual CoverFile Cover { get; set; }
         public int? CoverId { get; set; }
         #endregion
     }

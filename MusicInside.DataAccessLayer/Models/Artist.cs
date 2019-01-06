@@ -17,7 +17,7 @@ namespace MusicInside.DataAccessLayer.Models
         #endregion
 
         #region Navigation Properties
-        public IList<SongArtist> Songs { get; set; }
+        public virtual IList<SongArtist> Songs { get; set; }
         #endregion
     }
 }

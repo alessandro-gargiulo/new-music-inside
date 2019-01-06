@@ -9,10 +9,10 @@ namespace MusicInside.DataAccessLayer.AssociationClasses
         #endregion
 
         #region Navigation Properties
-        public Moment Moment { get; set; }
+        public virtual Moment Moment { get; set; }
         public int MomentId { get; set; }
 
-        public Song Song { get; set; }
+        public virtual Song Song { get; set; }
         public int SongId { get; set; }
         #endregion
     }

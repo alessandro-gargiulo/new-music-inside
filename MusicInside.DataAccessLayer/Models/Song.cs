@@ -15,16 +15,16 @@ namespace MusicInside.DataAccessLayer.Models
         #endregion
 
         #region Navigation Properties
-        public Statistic Statistic { get; set; }
+        public virtual Statistic Statistic { get; set; }
         public int? StatisticId { get; set; }
-        public Album Album { get; set; }
+        public virtual Album Album { get; set; }
         public int? AlbumId { get; set; }
-        public MediaFile Media { get; set; }
+        public virtual MediaFile Media { get; set; }
         public int? MediaId { get; set; }
 
-        public IList<SongGenre> Genres { get; set; }
-        public IList<SongArtist> Artists { get; set; }
-        public IList<SongMoment> Moments { get; set; }
+        public virtual IList<SongGenre> Genres { get; set; }
+        public virtual IList<SongArtist> Artists { get; set; }
+        public virtual IList<SongMoment> Moments { get; set; }
         #endregion
     }
 }

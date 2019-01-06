@@ -21,9 +21,10 @@ namespace MusicInside
         {
             var connection = Configuration.GetConnectionString("MusicInsideDatabase");
             services.AddDbContext<MusicInsideDbContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseLazyLoadingProxies().UseSqlServer(connection));
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
 
             services.AddSpaStaticFiles(configuration =>
             {

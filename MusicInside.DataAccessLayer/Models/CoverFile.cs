@@ -10,7 +10,7 @@
         #endregion
 
         #region Navigation Properties
-        public Album Album { get; set; }
+        public virtual Album Album { get; set; }
         #endregion
     }
 }
