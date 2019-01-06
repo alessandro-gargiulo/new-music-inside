@@ -10,3 +10,10 @@ export class SongTile {
   public statCount: number;
   public statWhen: string;
 }
+
+export class PagedSongTile {
+  public overallCount: number;
+  public page: number;
+  public pageSize: number;
+  public songs: SongTile[];
+}

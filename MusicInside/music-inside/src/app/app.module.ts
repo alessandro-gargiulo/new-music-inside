@@ -16,6 +16,9 @@ import { SongListComponent } from 'src/app/components/song-list/song-list.compon
 import { AlbumListComponent } from 'src/app/components/album-list/album-list.component';
 import { ArtistListComponent } from 'src/app/components/artist-list/artist-list.component';
 import { AboutMeComponent } from 'src/app/components/about-me/about-me.component';
+import { SongListService } from 'src/app/services/song-list.service';
+import { MatPaginatorModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,14 +34,17 @@ import { AboutMeComponent } from 'src/app/components/about-me/about-me.component
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MusicPlayerModule.forRoot(),
     MatGridListModule,
     MatSnackBarModule,
+    MatPaginatorModule,
     NgbCarouselModule,
     OverlayModule
   ],
   providers: [
+    SongListService,
     MatSnackBar
   ],
   entryComponents: [

@@ -1,3 +1,9 @@
+<!-- Paginator -->
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="onPageEvent($event)">
+</mat-paginator>
 <!-- Song List -->
 <mat-grid-list cols="4" rowHeight="300">
   <mat-grid-tile *ngFor="let song of songs;let i = index">

@@ -6,4 +6,10 @@ var SongTile = /** @class */ (function () {
     return SongTile;
 }());
 exports.SongTile = SongTile;
+var PagedSongTile = /** @class */ (function () {
+    function PagedSongTile() {
+    }
+    return PagedSongTile;
+}());
+exports.PagedSongTile = PagedSongTile;
 //# sourceMappingURL=song-tile.model.js.map
