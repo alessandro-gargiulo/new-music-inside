@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MusicInside.DataAccessLayer.Context;
+using MusicInside.Infrastracture;
 
 namespace MusicInside
 {
@@ -22,6 +23,8 @@ namespace MusicInside
             var connection = Configuration.GetConnectionString("MusicInsideDatabase");
             services.AddDbContext<MusicInsideDbContext>
                 (options => options.UseLazyLoadingProxies().UseSqlServer(connection));
+
+            services.Configure<WebRepositoriesOptions>(Configuration.GetSection("WebRepositories"));
 
             services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
