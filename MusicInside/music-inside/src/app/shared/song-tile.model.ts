@@ -3,6 +3,7 @@ export class SongTile {
   public title: string;
   public artist: string;
   public album: string;
+  public genre: string;
   public coverUrl: string;
   public fileUrl: string;
   public fileType: string;
