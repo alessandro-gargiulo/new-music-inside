@@ -4,5 +4,6 @@
     {
         public string Cover { get; set; }
         public string File { get; set; }
+        public string Slide { get; set; }
     }
 }

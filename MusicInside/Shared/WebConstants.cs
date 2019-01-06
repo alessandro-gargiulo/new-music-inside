@@ -18,6 +18,10 @@
             public const string SONG_LIST_ROUTE = "api/song-list";
             public const string SONG_ROUTE = "api/songs";
             #endregion
+
+            #region Slide Controller Routes
+            public const string SLIDE_LIST_ROUTE = "api/slides-list";
+            #endregion
         }
 
         public struct VALUES

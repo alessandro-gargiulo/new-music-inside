@@ -6,4 +6,10 @@ var CarouselSlide = /** @class */ (function () {
     return CarouselSlide;
 }());
 exports.CarouselSlide = CarouselSlide;
+var PagedCarouselSlide = /** @class */ (function () {
+    function PagedCarouselSlide() {
+    }
+    return PagedCarouselSlide;
+}());
+exports.PagedCarouselSlide = PagedCarouselSlide;
 //# sourceMappingURL=carousel-slide.js.map

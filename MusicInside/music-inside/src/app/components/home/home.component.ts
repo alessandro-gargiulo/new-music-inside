@@ -1,38 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CarouselSlide } from 'src/app/shared/carousel-slide';
+import { Subscription } from 'rxjs';
+import { SlideListService } from 'src/app/services/slide-list.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   public images: CarouselSlide[];
 
-  constructor() {
-    this.images = [];
-    this.images.push({
-      src: `https://picsum.photos/900/500?random&t=${Math.random()}`,
-      alt: 'example',
-      header: 'First slide label',
-      text: 'Nulla vitae elit libero, a pharetra augue mollis interdum.'
-    });
-    this.images.push({
-      src: `https://picsum.photos/900/500?random&t=${Math.random()}`,
-      alt: 'example',
-      header: 'Second slide label',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-    });
-    this.images.push({
-      src: `https://picsum.photos/900/500?random&t=${Math.random()}`,
-      alt: 'example',
-      header: 'Third slide label',
-      text: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
-    });
+  private _slides$ : Subscription;
+
+  constructor(private _sldSrv : SlideListService) {
   }
 
   ngOnInit() {
+    this._slides$ = this._sldSrv.getActive().subscribe(res => {
+      this.images = res;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this._slides$.unsubscribe();
   }
 
 }

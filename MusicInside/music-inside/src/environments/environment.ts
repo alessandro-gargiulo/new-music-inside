@@ -26,6 +26,12 @@ export const environment = {
     },
     albumList: {
       base: 'album-list'
+    },
+    slideList: {
+      base: 'slides-list',
+      active: 'active',
+      paramSize: 'limit',
+      paramPage: 'page'
     }
   }
 };

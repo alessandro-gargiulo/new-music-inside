@@ -50,10 +50,6 @@ export class SongListComponent implements OnInit, OnDestroy {
     this._snackBar.open(`${this.songs[index].title} added to playlist.`, 'Dismiss', { duration: 5000 });
   }
 
-  //public getCssBackgroundRuleUrl(url: string): string {
-  //  return `url(${url})`;
-  //}
-
   public search(): void {
     this.getSongs(1, this.pageSize, this.searchParameter);
   }
