@@ -219,7 +219,7 @@ namespace MusicInside.Batch.Importer.Implementations
             string extension = file.Substring(dotPos, file.Length - dotPos);
             MediaFile dbMediaFile = new MediaFile
             {
-                Path = folder,
+                Path = Path.Combine(folder, $"{file}.{extension}"),
                 FileName = Path.GetFileNameWithoutExtension(file),
                 Extension = extension
             };
