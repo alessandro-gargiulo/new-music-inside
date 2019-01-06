@@ -1,4 +1,6 @@
-﻿namespace MusicInside.Entities
+﻿using System.Collections.Generic;
+
+namespace MusicInside.Entities
 {
     public class SongTileEntity
     {
@@ -11,6 +13,14 @@
         public string FileUrl { get; set; }
         public string FileType { get; set; }
         public int StatCount { get; set; }
-        public int StatWhen { get; set; }
+        public string StatWhen { get; set; }
+    }
+
+    public class PagedSongTileEntity
+    {
+        public int OverallCount { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public IEnumerable<SongTileEntity> Songs { get; set; }
     }
 }

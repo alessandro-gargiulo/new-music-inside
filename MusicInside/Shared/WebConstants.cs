@@ -5,16 +5,18 @@
         public struct ROUTES
         {
             #region Album Controller Routes
+            public const string ALBUM_LIST_ROUTE = "api/album-list";
             public const string ALBUM_ROUTE = "api/albums";
             #endregion
 
             #region Artist Controller Routes
-            public const string ARTIST_ROUTE = "api/artist";
+            public const string ARTIST_LIST_ROUTE = "api/artist-list";
+            public const string ARTIST_ROUTE = "api/artists";
             #endregion
 
             #region Song Controller Routes
             public const string SONG_LIST_ROUTE = "api/song-list";
-            public const string SONG_ROUTE = "api/song";
+            public const string SONG_ROUTE = "api/songs";
             #endregion
         }
 
