@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CarouselSlide } from 'src/app/shared/carousel-slide';
+import { CarouselSlide } from 'src/app/shared/carousel-slide.model';
 import { Subscription } from 'rxjs';
 import { SlideListService } from 'src/app/services/slide-list.service';
 

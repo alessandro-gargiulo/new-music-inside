@@ -1,3 +1,44 @@
-<p>
-  album-list works!
-</p>
+<!-- Options Bar -->
+<div class="options-bar">
+  <div class="options-bar-search">
+    <!-- Search Area -->
+    <mat-form-field>
+      <input matInput placeholder="Search" [(ngModel)]="searchParameter">
+    </mat-form-field>
+    <button mat-button (click)="search()">Search</button>
+  </div>
+  <div class="options-bar-paginator">
+    <!-- Paginator -->
+    <mat-paginator [length]="length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="onPageEvent($event)">
+    </mat-paginator>
+  </div>
+</div>
+
+<!-- Song List -->
+<mat-grid-list cols="4" rowHeight="300">
+  <mat-grid-tile *ngFor="let song of songs;let i = index">
+    <mat-grid-tile-header>
+      <div class="header-title">
+        <span class="header-title-text">{{song.title}}</span>
+      </div>
+      ,&nbsp;
+      <div class="header-artist">
+        <span class="header-artist-text">{{song.artist}}</span>
+      </div>
+    </mat-grid-tile-header>
+    <div class="tile-body">
+      <img [src]="song.coverUrl" />
+    </div>
+    <mat-grid-tile-footer>
+      <div class="footer-genres">
+        <span class="genre">{{song.genre}}Pop</span>
+      </div>
+      <a class="footer-playlist-control" (click)="addToPlaylist(i)">
+        <i class="fas fa-plus-circle"></i>
+      </a>
+    </mat-grid-tile-footer>
+  </mat-grid-tile>
+</mat-grid-list>

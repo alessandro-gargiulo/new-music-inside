@@ -1,15 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
+import { SlideListService } from 'src/app/services/slide-list.service';
 
-import { Services\slideListService } from './services\slide-list.service';
-
-describe('Services\slideListService', () => {
+describe('SlideListService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [Services\slideListService]
+      providers: [SlideListService]
     });
   });
 
-  it('should be created', inject([Services\slideListService], (service: Services\slideListService) => {
+  it('should be created', inject([SlideListService], (service: SlideListService) => {
     expect(service).toBeTruthy();
   }));
 });

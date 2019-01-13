@@ -18,7 +18,7 @@ export class SongListComponent implements OnInit, OnDestroy {
   public pageSizeOptions: number[] = [5, 10, 25, 100];
   public pageSize: number = 10;
 
-  public searchParameter: string = '';
+  public searchParameter: string;
 
   private _songs$: Subscription;
 
@@ -28,7 +28,7 @@ export class SongListComponent implements OnInit, OnDestroy {
     private _sngLstSrv: SongListService,
     private _snackBar: MatSnackBar
   ) {
-
+    this.searchParameter = '';
   }
 
   ngOnInit() {

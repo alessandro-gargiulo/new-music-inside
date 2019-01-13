@@ -25,7 +25,10 @@ export const environment = {
       base: 'albums'
     },
     albumList: {
-      base: 'album-list'
+      base: 'album-list',
+      paramSize: 'limit',
+      paramPage: 'page',
+      paramTitle: 'title'
     },
     slideList: {
       base: 'slides-list',

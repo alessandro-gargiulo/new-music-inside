@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PagedCarouselSlide, CarouselSlide } from '../shared/carousel-slide';
+import { PagedCarouselSlide, CarouselSlide } from '../shared/carousel-slide.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({

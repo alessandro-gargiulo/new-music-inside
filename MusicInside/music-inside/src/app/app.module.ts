@@ -22,6 +22,7 @@ import { MatPaginatorModule, MatInputModule, MatButtonModule } from '@angular/ma
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { SlideListService } from './services/slide-list.service';
+import { AlbumListService } from 'src/app/services/album-list.service';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { SlideListService } from './services/slide-list.service';
   providers: [
     SongListService,
     SlideListService,
+    AlbumListService,
     MatSnackBar
   ],
   entryComponents: [
