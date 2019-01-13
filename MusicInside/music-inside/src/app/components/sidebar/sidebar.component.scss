@@ -54,6 +54,12 @@
   font-weight: bold;
   border-left-width: 2px;
   border-left-style: solid;
+
+  &:not(.selected) {
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
 }
 
 .sidebar-left .sidebar-links a i.fas {
