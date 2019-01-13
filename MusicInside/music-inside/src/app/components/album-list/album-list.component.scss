@@ -1,0 +1,30 @@
+.options-bar {
+  .options-bar-search {
+    width: 40%;
+    display: inline-block;
+  }
+
+  .options-bar-paginator {
+    width: 60%;
+    display: inline-block;
+  }
+}
+
+.footer-modal-control {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  z-index: 5;
+
+  svg {
+    height: 28px;
+    width: 28px;
+  }
+}
+
+.header-title, .header-artist {
+  z-index: 5;
+}
+
+.header-title-text, .header-artist-text {
+}

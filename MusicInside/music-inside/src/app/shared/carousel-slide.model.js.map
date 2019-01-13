@@ -1,1 +1,1 @@
-{"version":3,"file":"carousel-slide.js","sourceRoot":"","sources":["carousel-slide.ts"],"names":[],"mappings":";;AAAA;IAAA;IAMA,CAAC;IAAD,oBAAC;AAAD,CAAC,AAND,IAMC;AANY,sCAAa;AAQ1B;IAAA;IAKA,CAAC;IAAD,yBAAC;AAAD,CAAC,AALD,IAKC;AALY,gDAAkB"}
+{"version":3,"file":"carousel-slide.model.js","sourceRoot":"","sources":["carousel-slide.model.ts"],"names":[],"mappings":";;AAAA;IAAA;IAMA,CAAC;IAAD,oBAAC;AAAD,CAAC,AAND,IAMC;AANY,sCAAa;AAQ1B;IAAA;IAKA,CAAC;IAAD,yBAAC;AAAD,CAAC,AALD,IAKC;AALY,gDAAkB"}

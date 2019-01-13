@@ -12,4 +12,4 @@ var PagedCarouselSlide = /** @class */ (function () {
     return PagedCarouselSlide;
 }());
 exports.PagedCarouselSlide = PagedCarouselSlide;
-//# sourceMappingURL=carousel-slide.js.map
+//# sourceMappingURL=carousel-slide.model.js.map

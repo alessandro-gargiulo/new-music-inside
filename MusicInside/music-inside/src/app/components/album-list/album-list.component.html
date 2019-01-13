@@ -17,27 +17,27 @@
   </div>
 </div>
 
-<!-- Song List -->
+<!-- Album List -->
 <mat-grid-list cols="4" rowHeight="300">
-  <mat-grid-tile *ngFor="let song of songs;let i = index">
+  <mat-grid-tile *ngFor="let album of albums;let i = index">
     <mat-grid-tile-header>
       <div class="header-title">
-        <span class="header-title-text">{{song.title}}</span>
+        <span class="header-title-text">{{album.title}}</span>
       </div>
       ,&nbsp;
       <div class="header-artist">
-        <span class="header-artist-text">{{song.artist}}</span>
+        <span class="header-artist-text">{{album.artist}}</span>
       </div>
     </mat-grid-tile-header>
     <div class="tile-body">
-      <img [src]="song.coverUrl" />
+      <img [src]="album.coverUrl" />
     </div>
     <mat-grid-tile-footer>
       <div class="footer-genres">
-        <span class="genre">{{song.genre}}Pop</span>
+        <span class="genre">{{album.genre}}Pop</span>
       </div>
-      <a class="footer-playlist-control" (click)="addToPlaylist(i)">
-        <i class="fas fa-plus-circle"></i>
+      <a class="footer-modal-control" (click)="openModal(i)">
+        <i class="fas fa-list-ul"></i>
       </a>
     </mat-grid-tile-footer>
   </mat-grid-tile>
