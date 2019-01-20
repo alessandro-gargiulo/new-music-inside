@@ -16,11 +16,8 @@ namespace MusicInside.Entities
         public string StatWhen { get; set; }
     }
 
-    public class PagedSongTileEntity
+    public class PagedSongTileEntity : PagedEntity
     {
-        public int OverallCount { get; set; }
-        public int Page { get; set; }
-        public int PageSize { get; set; }
         public IEnumerable<SongTileEntity> Songs { get; set; }
     }
 }

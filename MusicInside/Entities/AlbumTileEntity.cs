@@ -11,11 +11,8 @@ namespace MusicInside.Entities
         public string CoverUrl { get; set; }
     }
 
-    public class PagedAlbumTileEntity
+    public class PagedAlbumTileEntity : PagedEntity
     {
-        public int OverallCount { get; set; }
-        public int Page { get; set; }
-        public int PageSize { get; set; }
         public IEnumerable<AlbumTileEntity> Albums { get; set; }
     }
 }

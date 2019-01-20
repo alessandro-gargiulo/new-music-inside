@@ -23,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { SlideListService } from './services/slide-list.service';
 import { AlbumListService } from 'src/app/services/album-list.service';
+import { ArtistListService } from 'src/app/services/artist-list.service';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { AlbumListService } from 'src/app/services/album-list.service';
     SongListService,
     SlideListService,
     AlbumListService,
+    ArtistListService,
     MatSnackBar
   ],
   entryComponents: [

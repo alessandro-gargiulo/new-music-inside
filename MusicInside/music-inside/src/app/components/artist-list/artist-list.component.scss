@@ -1,0 +1,50 @@
+.options-bar {
+  .options-bar-search {
+    width: 40%;
+    display: inline-block;
+  }
+
+  .options-bar-paginator {
+    width: 60%;
+    display: inline-block;
+  }
+}
+
+[data-letters]:before {
+  content: attr(data-letters);
+  display: inline-block;
+  font-size: 1em;
+  width: 2.5em;
+  height: 2.5em;
+  line-height: 2.5em;
+  text-align: center;
+  border-radius: 50%;
+  background: plum;
+  vertical-align: middle;
+  margin-right: 1em;
+  color: white;
+}
+
+.artist-bullet-container {
+  .artist-bullet {
+    .bullet-modal-control {
+      p {
+        display: inline-block;
+      }
+
+      .bullet-hover {
+        display: none;
+      }
+
+      &:hover {
+        p {
+          display: none;
+        }
+
+        .bullet-hover {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

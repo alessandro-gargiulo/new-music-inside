@@ -10,6 +10,14 @@
   }
 }
 
+.tile-body {
+  width: 100%;
+
+  img {
+    width: 100%;
+  }
+}
+
 .footer-playlist-control {
   position: absolute;
   right: 10px;
@@ -26,8 +34,5 @@
   z-index: 5;
 }
 
-.header-title-text, .header-artist-text{
-
+.header-title-text, .header-artist-text {
 }
-
-

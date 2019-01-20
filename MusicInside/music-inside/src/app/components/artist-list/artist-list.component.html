@@ -1,3 +1,38 @@
-<p>
-  artist-list works!
-</p>
+<!-- Options Bar -->
+<div class="options-bar">
+  <div class="options-bar-search">
+    <!-- Search Area -->
+    <mat-form-field>
+      <input matInput placeholder="Search" [(ngModel)]="searchParameter">
+    </mat-form-field>
+    <button mat-button (click)="search()">Search</button>
+  </div>
+  <div class="options-bar-paginator">
+    <!-- Paginator -->
+    <mat-paginator [length]="length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="onPageEvent($event)">
+    </mat-paginator>
+  </div>
+</div>
+
+<!-- Artist List -->
+<div class="artist-bullet-container">
+  <div class="artist-bullet">
+    <a class="bullet-modal-control" (click)="openModal(i)">
+      <p class="bullet" data-letters="TF"></p>
+      <div class="bullet-hover">
+        <i class="fas fa-plus-circle"></i>
+      </div>
+    </a>
+  </div>
+  <div class="artist-infos">
+    <span class="artname">
+      Tiziano Ferro
+    </span>
+    <span class="num-song">
+      10
+    </span>
+  </div>
+</div>

@@ -16,7 +16,7 @@ namespace MusicInside.Controllers
     public class SongTilesController : Controller
     {
         private MusicInsideDbContext _context;
-        private WebRepositoriesOptions _webOptions;
+        private readonly WebRepositoriesOptions _webOptions;
 
         public SongTilesController(MusicInsideDbContext context, IOptions<WebRepositoriesOptions> options)
         {

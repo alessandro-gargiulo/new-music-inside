@@ -7,62 +7,59 @@ using MusicInside.Infrastracture;
 using MusicInside.Shared;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace MusicInside.Controllers
 {
-    [Route(WebConstants.ROUTES.ALBUM_LIST_ROUTE)]
-    public class AlbumTilesController : Controller
+    [Route(WebConstants.ROUTES.ARTIST_LIST_ROUTE)]
+    public class ArtistTilesController : Controller
     {
         private MusicInsideDbContext _context;
         private readonly WebRepositoriesOptions _webOptions;
 
-        public AlbumTilesController(MusicInsideDbContext context, IOptions<WebRepositoriesOptions> options)
+        public ArtistTilesController(MusicInsideDbContext context, IOptions<WebRepositoriesOptions> options)
         {
             _context = context;
             _webOptions = options.Value;
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] int limit = int.MaxValue, [FromQuery] int page = 1, [FromQuery] string title = "")
+        public IActionResult Get([FromQuery] int limit = int.MaxValue, [FromQuery] int page = 1, [FromQuery] string name = "")
         {
-            if(limit > 0 && page > 0)
+            if (limit > 0 && page > 0)
             {
-                // Ask for number of total albums
-                int count = _context.Albums.Where(x => string.IsNullOrEmpty(title) || x.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) > 0).Count();
-                // Retrieve page of albums
-                IEnumerable<Album> albums = _context.Albums
-                    .Where(x => string.IsNullOrEmpty(title) || x.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) > 0)
+                // Ask or number of total artist
+                int count = _context.Artists.Where(x => string.IsNullOrEmpty(name) || x.ArtName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > 0).Count();
+                // Retrieve page of artist
+                IEnumerable<Artist> artists = _context.Artists
+                    .Where(x => string.IsNullOrEmpty(name) || x.ArtName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > 0)
                     .OrderBy(s => s.Id)
                     .Skip((page - 1) * limit)
                     .Take(limit)
                     .ToList();
 
                 // Instantiate temp list
-                IList<AlbumTileEntity> parsedAlbums = new List<AlbumTileEntity>();
+                IList<ArtistTileEntity> parsedArtist = new List<ArtistTileEntity>();
 
                 // Map into result entitis
-                foreach(var album in albums)
+                foreach (var artist in artists)
                 {
-                    AlbumTileEntity ate = new AlbumTileEntity
+                    ArtistTileEntity ate = new ArtistTileEntity
                     {
-                        Id = album.Id,
-                        Title = album.Title,
-                        CoverUrl = Path.Combine(_webOptions.Cover, album.Cover.Path),
-                        NumSongs = album.Songs.Count(),
-                        Artist = album.Songs.FirstOrDefault().Artists.FirstOrDefault(x => x.IsPrincipalArtist == true).Artist.ArtName
+                        Id = artist.Id,
+                        ArtName = artist.ArtName,
+                        NumSongs = artist.Songs.Count()
                     };
-                    parsedAlbums.Add(ate);
+                    parsedArtist.Add(ate);
                 }
 
                 // Return Json Result
-                return Json(new PagedAlbumTileEntity
+                return Json(new PagedArtistTileEntity
                 {
                     OverallCount = count,
                     Page = page,
                     PageSize = limit,
-                    Albums = parsedAlbums
+                    Artists = parsedArtist
                 });
             }
             else
@@ -79,13 +76,13 @@ namespace MusicInside.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]AlbumTileEntity entity)
+        public IActionResult Post([FromBody]ArtistTileEntity entity)
         {
             throw new NotImplementedException();
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody]AlbumTileEntity entity)
+        public IActionResult Put([FromBody]ArtistTileEntity entity)
         {
             throw new NotImplementedException();
         }

@@ -7,7 +7,6 @@ using MusicInside.Infrastracture;
 using MusicInside.Shared;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace MusicInside.Controllers
@@ -16,7 +15,7 @@ namespace MusicInside.Controllers
     public class CarouselSlidesController : Controller
     {
         private MusicInsideDbContext _context;
-        private WebRepositoriesOptions _webOptions;
+        private readonly WebRepositoriesOptions _webOptions;
 
         public CarouselSlidesController(MusicInsideDbContext context, IOptions<WebRepositoriesOptions> options)
         {
