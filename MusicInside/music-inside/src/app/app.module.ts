@@ -8,7 +8,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBar, MatSnackBarContainer, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbCarouselModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbCarouselModule, NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
 import { AboutMeComponent } from 'src/app/components/about-me/about-me.component';
@@ -23,6 +23,7 @@ import { AlbumListService } from 'src/app/services/album-list.service';
 import { ArtistListService } from 'src/app/services/artist-list.service';
 import { SongListService } from 'src/app/services/song-list.service';
 import { OptionsBarComponent } from './components/options-bar/options-bar.component';
+import { SongsModalComponent } from './components/songs-modal/songs-modal.component';
 import { SlideListService } from './services/slide-list.service';
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SlideListService } from './services/slide-list.service';
     AlbumListComponent,
     AboutMeComponent,
     ArtistListComponent,
-    OptionsBarComponent
+    OptionsBarComponent,
+    SongsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ import { SlideListService } from './services/slide-list.service';
     MatFormFieldModule,
     NgbCarouselModule,
     OverlayModule,
-    FormsModule
+    FormsModule,
+    NgbModalModule
   ],
   providers: [
     SongListService,
@@ -61,7 +64,8 @@ import { SlideListService } from './services/slide-list.service';
     MatSnackBar
   ],
   entryComponents: [
-    MatSnackBarContainer
+    MatSnackBarContainer,
+    SongsModalComponent
   ],
   bootstrap: [AppComponent]
 })
