@@ -11,9 +11,6 @@
     <mat-grid-tile-header>
       <div class="header-title">
         <span class="header-title-text">{{song.title}}</span>
-      </div>
-      ,&nbsp;
-      <div class="header-artist">
         <span class="header-artist-text">{{song.artist}}</span>
       </div>
     </mat-grid-tile-header>
@@ -22,7 +19,7 @@
     </div>
     <mat-grid-tile-footer>
       <div class="footer-genres">
-        <span class="genre">{{song.genre}}Pop</span>
+        <span class="rounded">{{song.genre}}Pop</span>
       </div>
       <a class="footer-playlist-control" (click)="addToPlaylist(i)">
         <i class="fas fa-plus-circle"></i>

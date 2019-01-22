@@ -11,9 +11,6 @@
     <mat-grid-tile-header>
       <div class="header-title">
         <span class="header-title-text">{{album.title}}</span>
-      </div>
-      ,&nbsp;
-      <div class="header-artist">
         <span class="header-artist-text">{{album.artist}}</span>
       </div>
     </mat-grid-tile-header>
@@ -21,8 +18,8 @@
       <img [src]="album.coverUrl" />
     </div>
     <mat-grid-tile-footer>
-      <div class="footer-genres">
-        <span class="genre">{{album.genre}}Pop</span>
+      <div class="footer-number">
+        <span class="rounded">{{album.numSongs}}</span>
       </div>
       <a class="footer-modal-control" (click)="openModal(i)">
         <i class="fas fa-list-ul"></i>

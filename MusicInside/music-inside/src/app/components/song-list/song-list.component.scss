@@ -18,9 +18,15 @@
   }
 }
 
-.header-title, .header-artist {
+.header-title {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   z-index: 5;
+  width: 100%;
+  font-weight: bold !important;
 }
 
 .header-title-text, .header-artist-text {
+  padding: 2px;
 }
