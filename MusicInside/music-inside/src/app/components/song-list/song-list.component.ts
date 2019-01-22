@@ -4,6 +4,7 @@ import { MusicPlayerService } from 'src/app/modules/music-player/services/music-
 import { MatSnackBar, PageEvent } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { SongListService } from 'src/app/services/song-list.service';
+import { IOptionsEvent, IOptionsBar } from 'src/app/components/options-bar/options-bar.component.types';
 
 @Component({
   selector: 'app-song-list',
@@ -15,10 +16,7 @@ export class SongListComponent implements OnInit, OnDestroy {
   public songs: SongTile[];
 
   public length: number;
-  public pageSizeOptions: number[] = [5, 10, 25, 100];
-  public pageSize: number = 10;
-
-  public searchParameter: string;
+  public options: IOptionsBar;
 
   private _songs$: Subscription;
 
@@ -28,11 +26,14 @@ export class SongListComponent implements OnInit, OnDestroy {
     private _sngLstSrv: SongListService,
     private _snackBar: MatSnackBar
   ) {
-    this.searchParameter = '';
+    this.options = {
+      pageSize: 10,
+      pageSizeOptions: [5, 10, 25, 100]
+    }
   }
 
   ngOnInit() {
-    this.getSongs(1, this.pageSize);
+    this.getSongs(1, this.options.pageSize);
   }
 
   ngOnDestroy(): void {
@@ -50,13 +51,12 @@ export class SongListComponent implements OnInit, OnDestroy {
     this._snackBar.open(`${this.songs[index].title} added to playlist.`, 'Dismiss', { duration: 5000 });
   }
 
-  public search(): void {
-    this.getSongs(1, this.pageSize, this.searchParameter);
+  public search(e: IOptionsEvent): void {
+    this.getSongs(1, e.pageSize, e.searchParameter);
   }
 
-  public onPageEvent(e: PageEvent) {
-    this.pageSize = e.pageSize;
-    this.getSongs(e.pageIndex + 1, e.pageSize, this.searchParameter);
+  public onPageEvent(e: IOptionsEvent) {
+    this.getSongs(e.pageIndex, e.pageSize, e.searchParameter);
   }
 
   private getSongs(page: number, size: number, title?: string): void {

@@ -1,0 +1,18 @@
+<!-- Options Bar -->
+<div class="options-bar">
+  <div class="options-bar-search">
+    <!-- Search Area -->
+    <mat-form-field>
+      <input matInput [placeholder]="searchPlaceholder" [(ngModel)]="searchParameter">
+    </mat-form-field>
+    <button mat-button (click)="search()">Search</button>
+  </div>
+  <div class="options-bar-paginator">
+    <!-- Paginator -->
+    <mat-paginator [length]="length"
+                   [pageSize]="options.pageSize"
+                   [pageSizeOptions]="options.pageSizeOptions"
+                   (page)="page($event)">
+    </mat-paginator>
+  </div>
+</div>

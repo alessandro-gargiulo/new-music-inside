@@ -1,21 +1,9 @@
-<!-- Options Bar -->
-<div class="options-bar">
-  <div class="options-bar-search">
-    <!-- Search Area -->
-    <mat-form-field>
-      <input matInput placeholder="Search" [(ngModel)]="searchParameter">
-    </mat-form-field>
-    <button mat-button (click)="search()">Search</button>
-  </div>
-  <div class="options-bar-paginator">
-    <!-- Paginator -->
-    <mat-paginator [length]="length"
-                   [pageSize]="pageSize"
-                   [pageSizeOptions]="pageSizeOptions"
-                   (page)="onPageEvent($event)">
-    </mat-paginator>
-  </div>
-</div>
+<app-options-bar [searchPlaceholder]="'Search'"
+                 [length]="length"
+                 [options]="options"
+                 (onSearchClick)="search($event)"
+                 (opPageChanged)="onPageEvent($event)">
+</app-options-bar>
 
 <!-- Song List -->
 <mat-grid-list cols="4" rowHeight="300">

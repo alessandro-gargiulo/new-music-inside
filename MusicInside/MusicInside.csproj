@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="music-inside\src\app\components\options-bar\options-bar.component.types.ts" />
     <None Remove="music-inside\src\app\modules\music-player\components\player\player.ts" />
     <None Remove="music-inside\src\app\shared\carousel-slide.model.ts" />
     <None Remove="music-inside\src\app\shared\song-tile.model.ts" />
@@ -39,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="music-inside\src\app\components\options-bar\options-bar.component.types.ts" />
     <TypeScriptCompile Include="music-inside\src\app\modules\music-player\components\player\player.ts" />
     <TypeScriptCompile Include="music-inside\src\app\shared\carousel-slide.model.ts" />
     <TypeScriptCompile Include="music-inside\src\app\shared\song-tile.model.ts" />
