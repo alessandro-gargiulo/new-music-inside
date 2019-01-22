@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
-import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
 import { MatSnackBar } from '@angular/material';
+import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
+import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
 
 @Component({
   selector: 'app-artist-list',

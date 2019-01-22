@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SongTile } from 'src/app/shared/song-tile.model';
-import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
-import { MatSnackBar, PageEvent } from '@angular/material';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
+import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
+import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
 import { SongListService } from 'src/app/services/song-list.service';
-import { IOptionsEvent, IOptionsBar } from 'src/app/components/options-bar/options-bar.component.types';
+import { SongTile } from 'src/app/shared/song-tile.model';
 
 @Component({
   selector: 'app-song-list',

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material';
+import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
 
 @Component({
   selector: 'app-options-bar',

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { AlbumTile } from 'src/app/shared/album-tile.model';
-import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
-import { MatSnackBar, PageEvent } from '@angular/material';
-import { AlbumListService } from 'src/app/services/album-list.service';
 import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
+import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
+import { AlbumListService } from 'src/app/services/album-list.service';
+import { AlbumTile } from 'src/app/shared/album-tile.model';
 
 @Component({
   selector: 'app-album-list',

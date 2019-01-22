@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CarouselSlide } from 'src/app/shared/carousel-slide.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SlideListService } from 'src/app/services/slide-list.service';
+import { CarouselSlide } from 'src/app/shared/carousel-slide.model';
 
 @Component({
   selector: 'app-home',

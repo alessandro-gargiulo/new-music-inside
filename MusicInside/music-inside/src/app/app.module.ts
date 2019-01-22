@@ -1,30 +1,29 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatSnackBarModule, MatSnackBar, MatSnackBarContainer } from '@angular/material/snack-bar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from "@angular/cdk/overlay";
-import { NgbCarouselModule } from "@ng-bootstrap/ng-bootstrap"
-
-import { AppComponent } from 'src/app/app.component';
-import { MusicPlayerModule } from 'src/app/modules/music-player/music-player.module';
-import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
-import { HomeComponent } from 'src/app/components/home/home.component';
-import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule, MatInputModule, MatPaginatorModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSnackBar, MatSnackBarContainer, MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbCarouselModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { SongListComponent } from 'src/app/components/song-list/song-list.component';
+import { AppComponent } from 'src/app/app.component';
+import { AboutMeComponent } from 'src/app/components/about-me/about-me.component';
 import { AlbumListComponent } from 'src/app/components/album-list/album-list.component';
 import { ArtistListComponent } from 'src/app/components/artist-list/artist-list.component';
-import { AboutMeComponent } from 'src/app/components/about-me/about-me.component';
-import { SongListService } from 'src/app/services/song-list.service';
-import { MatPaginatorModule, MatInputModule, MatButtonModule } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { SlideListService } from './services/slide-list.service';
+import { HomeComponent } from 'src/app/components/home/home.component';
+import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
+import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
+import { SongListComponent } from 'src/app/components/song-list/song-list.component';
+import { MusicPlayerModule } from 'src/app/modules/music-player/music-player.module';
 import { AlbumListService } from 'src/app/services/album-list.service';
 import { ArtistListService } from 'src/app/services/artist-list.service';
+import { SongListService } from 'src/app/services/song-list.service';
 import { OptionsBarComponent } from './components/options-bar/options-bar.component';
+import { SlideListService } from './services/slide-list.service';
 
 @NgModule({
   declarations: [

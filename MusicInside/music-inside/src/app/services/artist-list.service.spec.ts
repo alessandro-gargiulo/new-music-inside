@@ -1,5 +1,4 @@
 import { TestBed, inject } from '@angular/core/testing';
-
 import { ArtistListService } from './artist-list.service';
 
 describe('ArtistListService', () => {
