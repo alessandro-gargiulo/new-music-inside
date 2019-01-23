@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SongModal } from 'src/app/shared/song-modal.model';
+import { PlayableSong } from 'src/app/shared/song-modal.model';
 
 @Component({
   selector: 'app-songs-modal',
@@ -11,7 +11,7 @@ export class SongsModalComponent {
 
   @Input() title: string;
   @Input() closeLabel: string;
-  @Input() songs: SongModal[];
+  @Input() songs: PlayableSong[];
 
   constructor(public activeModal: NgbActiveModal) { }
 

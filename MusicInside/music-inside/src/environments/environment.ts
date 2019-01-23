@@ -7,7 +7,9 @@ export const environment = {
   api: {
     api_base_path: 'api',
     song: {
-      base: 'songs'
+      base: 'songs',
+      fromAlbum: 'fromAlbum',
+      paramId: 'id'
     },
     songList: {
       base: 'song-list',

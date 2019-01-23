@@ -2,7 +2,7 @@
 @import "assets/_variables.scss";
 
 .app-router-content {
-  padding-left: $sidebar-expanded-width;
+  padding-left: $sidebar-expanded-width + 10px;
 }
 
 .app-player-content {

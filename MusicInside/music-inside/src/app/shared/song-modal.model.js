@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var SongModal = /** @class */ (function () {
-    function SongModal() {
+var PlayableSong = /** @class */ (function () {
+    function PlayableSong() {
     }
-    return SongModal;
+    return PlayableSong;
 }());
-exports.SongModal = SongModal;
+exports.PlayableSong = PlayableSong;
 //# sourceMappingURL=song-modal.model.js.map
