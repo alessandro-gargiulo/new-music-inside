@@ -1,36 +1,58 @@
 [data-letters]:before {
   content: attr(data-letters);
   display: inline-block;
-  font-size: 1em;
-  width: 2.5em;
-  height: 2.5em;
-  line-height: 2.5em;
+  font-size: 2em;
+  width: 3.5em;
+  height: 3.5em;
+  line-height: 3.5em;
   text-align: center;
   border-radius: 50%;
   background: plum;
   vertical-align: middle;
-  margin-right: 1em;
+  color: white;
+}
+
+.bullet-hover {
+  font-size: 2em;
+  width: 3.5em;
+  height: 3.5em;
+  line-height: 3.5em;
+  text-align: center;
+  border-radius: 50%;
+  background: plum;
+  vertical-align: middle;
   color: white;
 }
 
 .artist-bullet-container {
-  .artist-bullet {
-    .bullet-modal-control {
-      p {
-        display: inline-block;
-      }
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
 
-      .bullet-hover {
-        display: none;
-      }
+  .artist-bullet-entry {
+    flex-basis: 10%;
+    text-align: center;
 
-      &:hover {
-        p {
-          display: none;
+    .artist-bullet {
+      .bullet-modal-control {
+        .bullet {
+          display: inline-block;
         }
 
         .bullet-hover {
-          display: inline-block;
+          display: none;
+        }
+
+        &:hover {
+          .bullet {
+            display: none;
+          }
+
+          .bullet-hover {
+            display: inline-block;
+          }
         }
       }
     }
