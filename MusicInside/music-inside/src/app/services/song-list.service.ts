@@ -24,4 +24,8 @@ export class SongListService {
   getFromAlbum(albumId: number): Observable<PlayableSong[]> {
     return this._http.get<PlayableSong[]>(`${environment.api.api_base_path}/${environment.api.song.base}/${environment.api.song.fromAlbum}?${environment.api.song.paramId}=${albumId}`);
   }
+
+  getFromArtist(artistId: number): Observable<PlayableSong[]> {
+    return this._http.get<PlayableSong[]>(`${environment.api.api_base_path}/${environment.api.song.base}/${environment.api.song.fromArtist}?${environment.api.song.paramId}=${artistId}`);
+  }
 }

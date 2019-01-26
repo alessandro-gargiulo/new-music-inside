@@ -61,6 +61,46 @@ namespace MusicInside.Controllers
             }
         }
 
+        [HttpGet("fromArtist")]
+        public IActionResult GetSongsFromArtist([FromQuery] int id = 0)
+        {
+            if (id > 0)
+            {
+                // Ask for Artist
+                Artist artist = _context.Artists.FirstOrDefault(x => x.Id == id);
+                if (artist != null)
+                {
+                    IList<SongEntity> songs = new List<SongEntity>();
+
+                    // Retrieve all song
+                    var allSongs = artist.Songs.Select(x => x.Song).ToList();
+
+                    foreach (Song song in allSongs)
+                    {
+                        songs.Add(new SongEntity
+                        {
+                            Id = song.Id,
+                            Title = song.Title,
+                            Artist = song.Artists.FirstOrDefault(x => x.IsPrincipalArtist.Value).Artist.ArtName,
+                            CoverUrl = Path.Combine(_webOptions.Cover, song.Album.Cover.Path),
+                            FileType = "audio/mpeg",
+                            FileUrl = Path.Combine(_webOptions.File, song.Media.Path)
+                        });
+                    }
+
+                    return Json(songs);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {

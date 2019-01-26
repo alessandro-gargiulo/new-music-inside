@@ -9,6 +9,7 @@ export const environment = {
     song: {
       base: 'songs',
       fromAlbum: 'fromAlbum',
+      fromArtist: 'fromArtist',
       paramId: 'id'
     },
     songList: {
@@ -21,7 +22,10 @@ export const environment = {
       base: 'artists'
     },
     artistList: {
-      base: 'artist-list'
+      base: 'artist-list',
+      paramSize: 'limit',
+      paramPage: 'page',
+      paramName: 'name'
     },
     album: {
       base: 'albums'
