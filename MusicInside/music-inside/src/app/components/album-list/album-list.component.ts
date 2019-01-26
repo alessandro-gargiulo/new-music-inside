@@ -5,10 +5,10 @@ import { Subscription } from 'rxjs';
 import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
 import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
 import { AlbumListService } from 'src/app/services/album-list.service';
-import { AlbumTile } from 'src/app/shared/album-tile.model';
-import { SongsModalComponent } from '../songs-modal/songs-modal.component';
-import { PlayableSong } from 'src/app/shared/song-modal.model';
 import { SongListService } from 'src/app/services/song-list.service';
+import { AlbumTile } from 'src/app/shared/album-tile.model';
+import { PlayableSong } from 'src/app/shared/song-modal.model';
+import { SongsModalComponent } from '../songs-modal/songs-modal.component';
 
 @Component({
   selector: 'app-album-list',
@@ -56,18 +56,20 @@ export class AlbumListComponent implements OnInit {
       modalRef.componentInstance.title = 'Choose a song...';
       modalRef.componentInstance.closeLabel = 'Close';
       modalRef.componentInstance.songs = songs;
+      modalRef.componentInstance.addSong.subscribe((songId) => {
+        let selectedSong = this._lastSongs.find(x => x.id === songId);
+        if (selectedSong !== null && selectedSong !== undefined) {
+          this._plrSrv.pushTrack({
+            artist: selectedSong.artist,
+            coverUrl: selectedSong.coverUrl,
+            fileType: selectedSong.fileType,
+            songUrl: selectedSong.fileUrl,
+            title: selectedSong.title
+          });
+          this._snackBar.open(`'${selectedSong.title}' added to playlist.`, 'Dismiss', { duration: 5000 });
+        }
+      });
     });
-  }
-
-  public addToPlaylist(index: number): void {
-    this._plrSrv.pushTrack({
-      title: this._lastSongs[index].title,
-      artist: '',
-      coverUrl: '',
-      songUrl: this._lastSongs[index].url,
-      fileType: ''
-    });
-    this._snackBar.open(`${this._lastSongs[index].title} added to playlist.`, 'Dismiss', { duration: 5000 });
   }
 
   public search(e: IOptionsEvent): void {

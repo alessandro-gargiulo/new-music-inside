@@ -33,15 +33,18 @@ namespace MusicInside.Controllers
                 Album album = _context.Albums.FirstOrDefault(x => x.Id == id);
                 if(album != null)
                 {
-                    IList<MinimalSongEntity> songs = new List<MinimalSongEntity>();
+                    IList<SongEntity> songs = new List<SongEntity>();
 
                     foreach(Song song in album.Songs)
                     {
-                        songs.Add(new MinimalSongEntity
+                        songs.Add(new SongEntity
                         {
                             Id = song.Id,
                             Title = song.Title,
-                            Url = Path.Combine(_webOptions.File, song.Media.Path)
+                            Artist = song.Artists.FirstOrDefault(x => x.IsPrincipalArtist.Value).Artist.ArtName,
+                            CoverUrl = Path.Combine(_webOptions.Cover, song.Album.Cover.Path),
+                            FileType = "audio/mpeg",
+                            FileUrl = Path.Combine(_webOptions.File, song.Media.Path)
                         });
                     }
 

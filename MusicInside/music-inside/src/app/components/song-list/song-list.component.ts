@@ -48,7 +48,7 @@ export class SongListComponent implements OnInit, OnDestroy {
       songUrl: this.songs[index].fileUrl,
       fileType: this.songs[index].fileType
     });
-    this._snackBar.open(`${this.songs[index].title} added to playlist.`, 'Dismiss', { duration: 5000 });
+    this._snackBar.open(`'${this.songs[index].title}' added to playlist.`, 'Dismiss', { duration: 5000 });
   }
 
   public search(e: IOptionsEvent): void {
