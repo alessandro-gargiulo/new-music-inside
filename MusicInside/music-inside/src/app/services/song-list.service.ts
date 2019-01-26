@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PagedSongTile } from 'src/app/shared/song-tile.model';
+import { PagedSongTile, PlayableSong } from 'src/app/shared/song.models';
 import { environment } from 'src/environments/environment';
-import { PlayableSong } from '../shared/song-modal.model';
 
 @Injectable({
   providedIn: 'root'

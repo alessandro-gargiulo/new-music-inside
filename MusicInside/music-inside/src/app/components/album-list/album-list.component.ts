@@ -6,8 +6,8 @@ import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/optio
 import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
 import { AlbumListService } from 'src/app/services/album-list.service';
 import { SongListService } from 'src/app/services/song-list.service';
-import { AlbumTile } from 'src/app/shared/album-tile.model';
-import { PlayableSong } from 'src/app/shared/song-modal.model';
+import { AlbumTile } from 'src/app/shared/album.models';
+import { PlayableSong } from 'src/app/shared/song.models';
 import { SongsModalComponent } from '../songs-modal/songs-modal.component';
 
 @Component({

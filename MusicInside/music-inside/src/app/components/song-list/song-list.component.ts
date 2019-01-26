@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
 import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
 import { SongListService } from 'src/app/services/song-list.service';
-import { SongTile } from 'src/app/shared/song-tile.model';
+import { SongTile } from 'src/app/shared/song.models';
 
 @Component({
   selector: 'app-song-list',

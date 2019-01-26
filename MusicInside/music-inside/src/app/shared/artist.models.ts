@@ -1,6 +1,6 @@
 export class ArtistTile {
   public id: number;
-  public artname: string;
+  public artName: string;
   public numSongs: number;
 }
 

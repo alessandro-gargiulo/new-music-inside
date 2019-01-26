@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PlayableSong } from 'src/app/shared/song-modal.model';
+import { PlayableSong } from 'src/app/shared/song.models';
 
 @Component({
   selector: 'app-songs-modal',

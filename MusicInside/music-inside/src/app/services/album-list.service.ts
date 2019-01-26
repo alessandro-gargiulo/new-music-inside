@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PagedAlbumTile } from 'src/app/shared/album-tile.model';
+import { PagedAlbumTile } from 'src/app/shared/album.models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

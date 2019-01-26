@@ -12,4 +12,4 @@ var PagedArtistTile = /** @class */ (function () {
     return PagedArtistTile;
 }());
 exports.PagedArtistTile = PagedArtistTile;
-//# sourceMappingURL=artist.model.js.map
+//# sourceMappingURL=artist.models.js.map
