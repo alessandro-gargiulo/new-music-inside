@@ -42,6 +42,7 @@ export class SongListComponent implements OnInit, OnDestroy {
 
   public addToPlaylist(index: number): void {
     this._plrSrv.pushTrack({
+      id: this.songs[index].id,
       title: this.songs[index].title,
       artist: this.songs[index].artist,
       coverUrl: this.songs[index].coverUrl,

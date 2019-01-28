@@ -48,6 +48,7 @@ export class PlayerComponent implements OnInit {
     this.playlist = new Array<PlaylistTrack>();
 
     this._ghostTrack = {
+      id: 0,
       title: '',
       artist: '',
       coverUrl: 'assets//music_placeholder.png',

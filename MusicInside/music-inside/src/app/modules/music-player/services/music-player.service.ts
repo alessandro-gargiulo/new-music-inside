@@ -22,13 +22,24 @@ export class MusicPlayerService {
     return this._playlist.asObservable();
   }
 
+  get playlistIds(): number[] {
+    return this._datastore.tracks.map(x => { return x.id });
+  }
+
   public pushTrack(track: PlaylistTrack): void {
     this._datastore.tracks.push(track);
     this._playlist.next(Object.assign({}, this._datastore).tracks);
   }
 
-  public removeTrack(index: number) {
+  public removeTrack(index: number, byId?: boolean) {
+    if (byId) {
+      index = this._datastore.tracks.findIndex(x => x.id === index);
+    }
     this._datastore.tracks.splice(index, 1);
     this._playlist.next(Object.assign({}, this._datastore).tracks);
+  }
+
+  public isTrackInPlaylist(id: number): boolean {
+    return this.playlistIds.some((v, $i) => { return v === id });
   }
 }

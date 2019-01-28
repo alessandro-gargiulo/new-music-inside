@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IOptionsBar, IOptionsEvent } from 'src/app/components/options-bar/options-bar.component.types';
+import { SongsModalComponent } from 'src/app/components/songs-modal/songs-modal.component';
 import { MusicPlayerService } from 'src/app/modules/music-player/services/music-player.service';
 import { ArtistListService } from 'src/app/services/artist-list.service';
 import { SongListService } from 'src/app/services/song-list.service';
 import { ArtistTile } from 'src/app/shared/artist.models';
 import { PlayableSong } from 'src/app/shared/song.models';
-import { SongsModalComponent } from '../songs-modal/songs-modal.component';
 
 @Component({
   selector: 'app-artist-list',
@@ -54,6 +54,7 @@ export class ArtistListComponent implements OnInit {
         let selectedSong = this._lastSongs.find(x => x.id === songId);
         if (selectedSong !== null && selectedSong !== undefined) {
           this._plrSrv.pushTrack({
+            id: selectedSong.id,
             artist: selectedSong.artist,
             coverUrl: selectedSong.coverUrl,
             fileType: selectedSong.fileType,

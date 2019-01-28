@@ -60,6 +60,7 @@ export class AlbumListComponent implements OnInit {
         let selectedSong = this._lastSongs.find(x => x.id === songId);
         if (selectedSong !== null && selectedSong !== undefined) {
           this._plrSrv.pushTrack({
+            id: selectedSong.id,
             artist: selectedSong.artist,
             coverUrl: selectedSong.coverUrl,
             fileType: selectedSong.fileType,
