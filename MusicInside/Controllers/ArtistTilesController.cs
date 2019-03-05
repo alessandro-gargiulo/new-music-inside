@@ -29,10 +29,10 @@ namespace MusicInside.Controllers
             if (limit > 0 && page > 0)
             {
                 // Ask or number of total artist
-                int count = _context.Artists.Where(x => string.IsNullOrEmpty(name) || x.ArtName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > 0).Count();
+                int count = _context.Artists.Where(x => string.IsNullOrEmpty(name) || x.ArtName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0).Count();
                 // Retrieve page of artist
                 IEnumerable<Artist> artists = _context.Artists
-                    .Where(x => string.IsNullOrEmpty(name) || x.ArtName.IndexOf(name, StringComparison.OrdinalIgnoreCase) > 0)
+                    .Where(x => string.IsNullOrEmpty(name) || x.ArtName.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
                     .OrderBy(s => s.Id)
                     .Skip((page - 1) * limit)
                     .Take(limit)

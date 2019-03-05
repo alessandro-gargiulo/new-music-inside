@@ -30,10 +30,10 @@ namespace MusicInside.Controllers
             if(limit > 0 && page > 0)
             {
                 // Ask for number of total albums
-                int count = _context.Albums.Where(x => string.IsNullOrEmpty(title) || x.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) > 0).Count();
+                int count = _context.Albums.Where(x => string.IsNullOrEmpty(title) || x.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) >= 0).Count();
                 // Retrieve page of albums
                 IEnumerable<Album> albums = _context.Albums
-                    .Where(x => string.IsNullOrEmpty(title) || x.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) > 0)
+                    .Where(x => string.IsNullOrEmpty(title) || x.Title.IndexOf(title, StringComparison.OrdinalIgnoreCase) >= 0)
                     .OrderBy(s => s.Id)
                     .Skip((page - 1) * limit)
                     .Take(limit)
