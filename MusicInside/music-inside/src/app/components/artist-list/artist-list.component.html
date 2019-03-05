@@ -11,7 +11,7 @@
        *ngFor="let artist of artists;let i = index">
     <div class="artist-bullet">
       <a class="bullet-modal-control" (click)="openModal(artist.id)">
-        <div class="bullet" data-letters="FF"></div>
+        <div class="bullet" [attr.data-letters]="getInitials(artist.artName)"></div>
         <div class="bullet-hover">
           <i class="fas fa-plus-circle"></i>
         </div>
